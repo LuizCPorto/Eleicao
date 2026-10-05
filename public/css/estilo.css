@@ -335,11 +335,12 @@ li.c.sem-rank .bar{grid-column:2 / 4}
 /* Simulador do 2º turno (Presidente) */
 .bloco-acoes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .sim-placar{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;padding:14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)}
-.sim-lado{display:grid;gap:2px;min-width:0;grid-row:span 4;grid-template-rows:subgrid;align-content:start}   /* subgrid: os % ficam na mesma altura mesmo se um nome quebrar a linha */
+.sim-lado{display:grid;gap:2px;min-width:0;grid-row:span 5;grid-template-rows:subgrid;align-content:start}   /* subgrid: os % ficam na mesma altura mesmo se um nome quebrar a linha */
 .sim-lado[data-lado="b"]{text-align:right}
 .sim-lado .name{font-size:clamp(20px,4vw,28px);overflow-wrap:anywhere}
 .sim-lado .p{font:700 clamp(40px,9vw,64px)/1 var(--display);font-variant-numeric:tabular-nums;margin-top:6px}
 .sim-lado .v{font:12px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.sim-lado .t1{font:12px var(--mono);color:var(--muted);margin-top:4px}
 .sim-barra{grid-column:1 / -1;position:relative;display:flex;justify-content:space-between;height:16px;border-radius:4px;background:var(--line);overflow:hidden}
 .sim-barra span{display:block;height:100%}
 .sim-barra i{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--on-bg)}

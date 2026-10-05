@@ -117,7 +117,7 @@ function montar(){
     const d = el("div", "sim-lado");
     const nome = el("span", "name", c.nome);
     const sg = el("span", "party"); const b = el("b", null, c.partido); b.style.color = corPartido(c.partido); sg.append(`${c.n} · `, b);
-    d.append(nome, sg, el("span", "p"), el("span", "v"));
+    d.append(nome, sg, el("span", "p"), el("span", "v"), el("span", "t1", `no 1º turno: ${pctFmt(c.pct)}%`));
     d.dataset.lado = lado;
     placar.appendChild(d);
   }
@@ -218,6 +218,13 @@ function atualizar(){
 
 function resumo(r){
   if (!r.vv) return "Ninguém votaria em nenhum finalista nesta simulação. Mova os controles abaixo.";
+  if (!codificar()){
+    // Ponto de partida: explica por que o % não é o do 1º turno
+    const outros = fontes.filter(f => f.padrao[0] === 0 && f.padrao[1] === 0 && !["bn","ab"].includes(f.chave)).reduce((s, f) => s + f.votos, 0);
+    return `Ponto de partida: cada finalista só com os próprios votos do 1º turno (${A.nome} ${pctFmt(A.pct)}% e ${B.nome} ${pctFmt(B.pct)}% dos válidos). ` +
+      `No 2º turno os votos válidos se dividem só entre os dois, por isso ${pctFmt(r.pa)}% × ${pctFmt(r.pb)}%. ` +
+      `Distribua abaixo os ${milhoes(outros)} de eleitores dos outros candidatos para montar a sua simulação.`;
+  }
   if (r.va === r.vb) return `Nesta simulação, empate: ${fmt(r.va)} votos para cada finalista.`;
   const [m, n] = r.va > r.vb ? [A, B] : [B, A];
   return `Nesta simulação, ${m.nome} teria mais votos que ${n.nome}: diferença de ${fmt(Math.abs(r.va - r.vb))} votos (${pctFmt(Math.abs(r.pa - r.pb))} pontos percentuais). Votos válidos simulados: ${fmt(r.vv)}.`;
@@ -292,7 +299,7 @@ async function desenhar(){
     texto(c.nome, x, 400, `700 60px ${F.disp}`, COR.fg, {max: colW});
     texto(`${c.n} · ${c.partido}`, x, 442, `500 26px ${F.mono}`, cor);
     texto(pctFmt(p) + "%", x, 586, `700 140px ${F.disp}`, COR.fg, {max: colW});
-    texto(`${fmt(v)} votos`, x, 634, `500 26px ${F.mono}`, COR.muted);
+    texto(`${fmt(v)} votos · 1º turno: ${pctFmt(c.pct)}%`, x, 634, `500 26px ${F.mono}`, COR.muted, {max: colW});
   });
   const by = 664, bw = W - 2*M, bh = 34;
   g.fillStyle = COR.line; g.fillRect(M, by, bw, bh);
