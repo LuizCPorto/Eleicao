@@ -1,0 +1,9 @@
+// Publica só a pasta public/ como site estático (sem código de Worker).
+{
+  "name": "eleicao",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}
