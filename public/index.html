@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Placar da Apuração 2026</title>
+<meta name="description" content="2º turno das Eleições 2026 em 25 de outubro: Presidente e Governador, resultado do 1º turno por estado, propostas de governo dos candidatos e apuração ao vivo com dados oficiais do TSE.">
+<meta name="theme-color" content="#070b17">
+
+<!-- Prévia de compartilhamento (WhatsApp, redes sociais). O bloco abaixo é preenchido por scripts/paginas.py
+     com o endereço publicado do site (og:image e og:url precisam do endereço completo). -->
+<!-- og:inicio -->
+<link rel="canonical" href="https://luizcporto.github.io/placar/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Placar da Apuração 2026">
+<meta property="og:title" content="2º turno · Eleições 2026 · Placar da Apuração">
+<meta property="og:description" content="Presidente e Governador no 2º turno de 25 de outubro: quem disputa em cada estado, o resultado do 1º turno e as propostas oficiais de cada candidato.">
+<meta property="og:url" content="https://luizcporto.github.io/placar/">
+<meta property="og:image" content="https://luizcporto.github.io/placar/img/compartilhar.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Placar da Apuração 2026 · 2º turno em 25 de outubro">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:fim -->
+
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://resultados.tse.jus.br" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/estilo.css">
+<link rel="modulepreload" href="js/main.js">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow"><span class="live" id="live"><i></i><span id="liveTxt">Carregando…</span></span><span id="eyebrowTxt">· Eleições Gerais 2026</span></div>
+    <div class="titulo"><span id="flag"></span><h1 id="title">Placar da Apuração 2026</h1></div>
+  </header>
+
+  <div class="layout">
+    <main>
+      <div class="controls controls-topo">
+        <div class="seg seg-turno" role="group" aria-label="Turno">
+          <button data-turno="1" aria-pressed="false">1º turno <small>4/out</small></button>
+          <button data-turno="2" aria-pressed="false">2º turno <small>25/out</small></button>
+        </div>
+        <button class="btn btn-compartilhar" id="compartilhar" title="Compartilhar este link já com o turno, o cargo e o estado escolhidos">Compartilhar ↗</button>
+      </div>
+      <div class="controls">
+        <div class="seg" role="group" aria-label="Cargo">
+          <button data-cargo="geral" aria-pressed="false" hidden>Visão geral</button>
+          <button data-cargo="pres" aria-pressed="false">Presidente</button>
+          <button data-cargo="gov" aria-pressed="false">Governador</button>
+          <button data-cargo="sen" aria-pressed="false">Senador</button>
+          <button data-cargo="fed" aria-pressed="false">Dep. Federal</button>
+          <button data-cargo="est" aria-pressed="false">Dep. Estadual</button>
+        </div>
+      </div>
+      <div class="controls">
+        <select id="reg" aria-label="Região"></select>
+        <select id="uf" aria-label="Estado"></select>
+        <input id="q" type="search" placeholder="Buscar qualquer candidato" aria-label="Buscar candidato em todos os cargos e estados">
+        <button class="btn" id="refresh">Atualizar agora</button>
+        <button class="btn btn-reset" id="reset" title="Volta para a tela inicial, limpa a busca e mostra os candidatos ocultos">↺ Limpar filtros</button>
+      </div>
+
+      <div id="error" hidden></div>
+
+      <section class="busca" id="busca" aria-live="polite" hidden></section>
+
+      <!-- Visão geral do 2º turno -->
+      <div class="geral" id="geral" hidden>
+        <section class="contagem" id="contagem" aria-live="off">
+          <div class="cont-num"></div>
+          <p class="cont-txt"></p>
+        </section>
+      </div>
+
+      <!-- Governador em estado decidido no 1º turno (tela do 2º turno) -->
+      <section id="decidido" hidden></section>
+
+      <div class="disputa" id="disputa">
+      <section class="progress" id="progresso" aria-live="polite">
+        <div class="progress-top">
+          <div class="pct" id="pst">—<small>seções apuradas</small></div>
+          <div class="meta" id="meta">Carregando…</div>
+        </div>
+        <div class="track"><span id="track" style="width:0"></span></div>
+        <div class="stats">
+          <div>Votos válidos<b id="vv">—</b></div>
+          <div>Brancos<b id="vb">—</b></div>
+          <div>Nulos<b id="vn">—</b></div>
+          <div>Abstenção<b id="abs">—</b></div>
+        </div>
+      </section>
+
+      <!-- Abas (só em Presidente · Brasil): resultados, mapa ou gráfico de evolução -->
+      <div class="abas" id="abas" role="tablist" aria-label="Visualização" hidden>
+        <button role="tab" id="aba-res" aria-selected="true" aria-controls="painelRes">Resultados</button>
+        <button role="tab" id="aba-mapa" aria-selected="false" aria-controls="mapa" tabindex="-1">Mapa</button>
+        <button role="tab" id="aba-evo" aria-selected="false" aria-controls="evolucao" tabindex="-1">Evolução da apuração</button>
+      </div>
+
+      <div class="painel-res" id="painelRes" role="tabpanel" aria-labelledby="aba-res">
+      <div class="verdict" id="verdict"></div>
+      <ol id="list"></ol>
+      <div class="list-foot" id="listFoot"></div>
+      </div>
+
+      <section class="evolucao mapa" id="mapa" role="tabpanel" aria-labelledby="aba-mapa" hidden>
+        <div class="ev-top"><span class="ev-sub" id="mapaSub"></span></div>
+        <p class="ev-resumo" id="mapaResumo">Carregando os estados…</p>
+        <div class="mapa-legenda" id="mapaLegenda"></div>
+        <div class="mapa-wrap">
+          <div id="mapaSvg" class="mapa-svg"></div>
+          <div class="graf-tip" id="mapaTip" hidden></div>
+        </div>
+        <p class="ev-nota">A cor mostra quem está na frente em cada estado e por quanto (diferença em pontos percentuais dos votos válidos). Estados com pouca apuração podem mudar bastante. Passe o mouse ou use Tab para ver os números de cada estado.</p>
+        <details>
+          <summary>Ver o mapa em tabela</summary>
+          <div class="tabela-wrap"><table class="ev-tabela" id="mapaTabela"></table></div>
+        </details>
+      </section>
+
+      <section class="evolucao" id="evolucao" role="tabpanel" aria-labelledby="aba-evo" hidden>
+        <div class="ev-top">
+          <span class="ev-sub" id="evSub"></span>
+        </div>
+        <p class="ev-resumo" id="evResumo"></p>
+        <div class="ev-legenda" id="evLegenda"></div>
+        <div class="graf-wrap">
+          <div id="graf"></div>
+          <div class="graf-tip" id="grafTip" hidden></div>
+        </div>
+        <p class="ev-nota" id="evNota"></p>
+        <div id="ev2022" hidden>
+          <h3>Comparativo com 2022 (mesmos partidos)</h3>
+          <p class="ev-resumo" id="ev2022Txt"></p>
+          <div class="tabela-wrap"><table class="ev-tabela" id="ev2022Tab"></table></div>
+          <p class="ev-nota">"2022 neste ponto" usa as parciais reais da apuração do 1º turno de 2022, no mesmo % de seções apuradas (entre duas parciais, o valor é interpolado). Os candidatos de 2022 eram Lula (PT) e Jair Bolsonaro (PL). Fonte: parciais do TSE publicadas ao vivo pela Bloomberg Línea em 02/10/2022; resultado final e votos por estado: TSE.</p>
+        </div>
+        <h3>Onde ainda faltam votos</h3>
+        <p class="ev-nota">Os estados não são apurados no mesmo ritmo. Quando uma região que já foi muito apurada pesa mais no placar, o resultado nacional muda conforme chegam as urnas das outras.</p>
+        <div class="tabela-wrap"><table class="ev-tabela" id="evRegioes"></table></div>
+        <details>
+          <summary>Ver o gráfico em tabela</summary>
+          <div class="tabela-wrap"><table class="ev-tabela" id="evTabela"></table></div>
+        </details>
+      </section>
+
+      <section class="propostas bloco" id="propostas" hidden></section>
+      </div>
+    </main>
+
+    <aside>
+      <div id="favs" class="favs" aria-label="Favoritos"></div>
+      <!-- Anúncios: nenhum anúncio de candidato, partido ou coligação (propaganda eleitoral paga na internet é bem restrita: Lei 9.504/97, art. 57-C) -->
+      <div class="anuncios">
+        <a class="promo" href="https://luizcporto.github.io/" target="_blank" rel="noopener">
+          <span class="promo-eyebrow">Anúncio</span>
+          <strong>Quer um site como este?</strong>
+          <span>Este placar foi desenvolvido por <b>Luiz Carlos Porto</b>. Se você tem interesse em um site para você ou para o seu negócio, conheça o portfólio.</span>
+          <span class="promo-cta">Ver portfólio →</span>
+        </a>
+      </div>
+    </aside>
+  </div>
+
+  <footer>Dados oficiais do TSE (resultados.tse.jus.br), atualizados a cada 30 segundos durante a apuração. Percentuais sobre votos válidos. Se o TSE ficar fora do ar, o site mostra o último dado salvo no seu navegador, com o horário. Patrimônio e propostas de governo: dados abertos do TSE. Bandeiras estaduais: projeto bandeiras-br. Este site não veicula propaganda eleitoral. Conferência oficial: <a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noopener">app Resultados do TSE</a>.<br>Desenvolvido por <a href="https://luizcporto.github.io/" target="_blank" rel="noopener">Luiz Carlos Porto</a>.</footer>
+</div>
+
+<script type="module" src="js/main.js"></script>
+<script>
+  // Aberto com duplo clique (file://): o navegador bloqueia os módulos e os dados. Explica como abrir do jeito certo.
+  if (location.protocol === "file:") {
+    var aviso = document.getElementById("error");
+    aviso.hidden = false; aviso.className = "err";
+    aviso.innerHTML = "<b>Este arquivo não abre com duplo clique.</b> O navegador bloqueia os dados quando a página é aberta direto do computador (endereço <code>file://</code>). " +
+      "Para testar, dê duplo clique em <b>abrir-site.bat</b> (na pasta do projeto, acima de <code>public</code>) ou rode <code>python -m http.server 8000</code> e acesse <a href=\"http://localhost:8000\">localhost:8000</a>. Publicado (Cloudflare Pages) funciona normalmente.";
+    document.getElementById("liveTxt").textContent = "Abra pelo servidor local";
+  }
+</script>
+<noscript><p style="padding:16px">Este placar precisa de JavaScript para buscar os dados do TSE. Conferência oficial: <a href="https://resultados.tse.jus.br/oficial/app/index.html">app Resultados do TSE</a>.</p></noscript>
+</body>
+</html>

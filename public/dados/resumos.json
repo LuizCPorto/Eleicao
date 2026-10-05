@@ -1,0 +1,7 @@
+{
+ "leia": "Resumo opcional das propostas por tema. Só aparece no site quando os DOIS candidatos de uma disputa têm TODOS os temas preenchidos. Use os mesmos temas, textos de tamanho parecido (até 'limite_caracteres') e revise tudo contra o PDF original. Se usar IA, diga isso em 'aviso'. As chaves de 'cands' são o código do candidato (sqcand), o mesmo nome do PDF em propostas/.",
+ "aviso": "",
+ "limite_caracteres": 300,
+ "temas": ["Saúde", "Educação", "Segurança pública", "Economia e emprego", "Meio ambiente"],
+ "cands": {}
+}

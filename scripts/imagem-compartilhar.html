@@ -1,0 +1,31 @@
+<!doctype html>
+<!-- Modelo das imagens de prévia (1200x630). Sem parâmetros gera img/compartilhar.png; o scripts/paginas.py
+     passa ?e=…&h=…&s=…&p=… para gerar uma imagem por estado. Neutra de propósito: sem foto, nomes em ordem alfabética. -->
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@500&display=swap">
+<style>
+html,body{margin:0;width:1200px;height:630px;overflow:hidden}
+body{background:radial-gradient(700px 500px at 0% 0%,rgba(232,184,74,.22),transparent 60%),radial-gradient(600px 500px at 100% 100%,rgba(225,72,95,.18),transparent 60%),linear-gradient(180deg,#070b17,#141b33);
+  color:#f4efe3;font-family:"IBM Plex Sans",sans-serif;display:grid;align-content:center;padding:0 90px;box-sizing:border-box;gap:18px}
+.eb{font:500 26px "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:#f0c35a;display:flex;align-items:center;gap:14px;padding-right:150px}
+.eb i{width:16px;height:16px;border-radius:50%;background:#f0c35a;flex:none}
+h1{margin:0;font:700 128px/0.95 "Barlow Condensed",sans-serif;text-transform:uppercase;white-space:nowrap}
+h2{margin:0;font:600 64px/1.05 "Barlow Condensed",sans-serif;text-transform:uppercase;color:#e8b84a}
+p{margin:8px 0 0;font-size:30px;color:#c7cbe0}
+img{position:absolute;right:90px;top:70px;width:120px}
+</style></head><body>
+<img src="../public/img/favicon.svg" alt="">
+<div class="eb"><i></i><span id="e">Eleições Gerais 2026 · dados oficiais do TSE</span></div>
+<h1 id="h">Placar da Apuração</h1>
+<h2 id="s">2º turno · 25 de outubro</h2>
+<p id="p">Presidente e Governador · resultado do 1º turno por estado · propostas oficiais dos candidatos</p>
+<script>
+  var q = new URLSearchParams(location.search);
+  ["e","h","s","p"].forEach(function(k){ if (q.get(k)) document.getElementById(k).textContent = q.get(k); });
+  // Reduz a fonte até o texto caber (nomes longos)
+  [["h", 128, 1020], ["s", 64, 2 * 66]].forEach(function(c){
+    var el = document.getElementById(c[0]), t = c[1];
+    while (t > 30 && (c[0] === "h" ? el.scrollWidth > c[2] : el.offsetHeight > c[2] + 4)){ t -= 2; el.style.fontSize = t + "px"; }
+  });
+</script>
+</body></html>

@@ -1,0 +1,13 @@
+# Cabeçalhos da Cloudflare Pages (este arquivo não aparece no site)
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# PDFs das propostas e imagens mudam pouco: guarda por 1 dia no navegador.
+# HTML, JS, CSS e dados/ ficam com o padrão da Cloudflare (sempre revalida), para atualizações valerem na hora.
+/propostas/*
+  Cache-Control: public, max-age=86400
+/img/*
+  Cache-Control: public, max-age=86400

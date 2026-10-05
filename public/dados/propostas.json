@@ -1,0 +1,153 @@
+{
+ "gerado": "05/10/2026",
+ "fonte": "Dados abertos do TSE · proposta_governo_2026",
+ "cands": {
+  "280002551544": [
+   {
+    "arquivo": "propostas/280002551544.pdf",
+    "bytes": 1940855,
+    "original": "BR/2026BR280002551544_01.pdf"
+   }
+  ],
+  "280002542548": [
+   {
+    "arquivo": "propostas/280002542548.pdf",
+    "bytes": 1189907,
+    "original": "BR/2026BR280002542548_01.pdf"
+   }
+  ],
+  "10002544107": [
+   {
+    "arquivo": "propostas/10002544107.pdf",
+    "bytes": 656073,
+    "original": "AC/2026AC10002544107_01.pdf"
+   }
+  ],
+  "10002532492": [
+   {
+    "arquivo": "propostas/10002532492.pdf",
+    "bytes": 5313228,
+    "original": "AC/2026AC10002532492_01.pdf"
+   }
+  ],
+  "40002532272": [
+   {
+    "arquivo": "propostas/40002532272.pdf",
+    "bytes": 10162707,
+    "original": "AM/2026AM40002532272_01.pdf"
+   },
+   {
+    "arquivo": "propostas/40002532272_2.pdf",
+    "bytes": 10195164,
+    "original": "AM/2026AM40002532272_02.pdf"
+   },
+   {
+    "arquivo": "propostas/40002532272_3.pdf",
+    "bytes": 10167090,
+    "original": "AM/2026AM40002532272_03.pdf"
+   },
+   {
+    "arquivo": "propostas/40002532272_4.pdf",
+    "bytes": 10203763,
+    "original": "AM/2026AM40002532272_04.pdf"
+   },
+   {
+    "arquivo": "propostas/40002532272_5.pdf",
+    "bytes": 1145980,
+    "original": "AM/2026AM40002532272_05.pdf"
+   },
+   {
+    "arquivo": "propostas/40002532272_6.pdf",
+    "bytes": 10285667,
+    "original": "AM/2026AM40002532272_06.pdf"
+   },
+   {
+    "arquivo": "propostas/40002532272_7.pdf",
+    "bytes": 10170299,
+    "original": "AM/2026AM40002532272_07.pdf"
+   },
+   {
+    "arquivo": "propostas/40002532272_8.pdf",
+    "bytes": 8459864,
+    "original": "AM/2026AM40002532272_08.pdf"
+   }
+  ],
+  "40002541626": [
+   {
+    "arquivo": "propostas/40002541626.pdf",
+    "bytes": 128481,
+    "original": "AM/2026AM40002541626_01.pdf"
+   }
+  ],
+  "70002553055": [
+   {
+    "arquivo": "propostas/70002553055.pdf",
+    "bytes": 433241,
+    "original": "DF/2026DF70002553055_01.pdf"
+   }
+  ],
+  "70002552496": [
+   {
+    "arquivo": "propostas/70002552496.pdf",
+    "bytes": 1271697,
+    "original": "DF/2026DF70002552496_01.pdf"
+   }
+  ],
+  "80002552682": [
+   {
+    "arquivo": "propostas/80002552682.pdf",
+    "bytes": 966686,
+    "original": "ES/2026ES80002552682_01.pdf"
+   }
+  ],
+  "80002552172": [
+   {
+    "arquivo": "propostas/80002552172.pdf",
+    "bytes": 2258861,
+    "original": "ES/2026ES80002552172_01.pdf"
+   }
+  ],
+  "190002542887": [
+   {
+    "arquivo": "propostas/190002542887.pdf",
+    "bytes": 1143888,
+    "original": "RJ/2026RJ190002542887_01.pdf"
+   }
+  ],
+  "190002543380": [
+   {
+    "arquivo": "propostas/190002543380.pdf",
+    "bytes": 466219,
+    "original": "RJ/2026RJ190002543380_01.pdf"
+   }
+  ],
+  "200002535255": [
+   {
+    "arquivo": "propostas/200002535255.pdf",
+    "bytes": 1526455,
+    "original": "RN/2026RN200002535255_01.pdf"
+   }
+  ],
+  "200002534001": [
+   {
+    "arquivo": "propostas/200002534001.pdf",
+    "bytes": 819488,
+    "original": "RN/2026RN200002534001_01.pdf"
+   }
+  ],
+  "270002544599": [
+   {
+    "arquivo": "propostas/270002544599.pdf",
+    "bytes": 3129796,
+    "original": "TO/2026TO270002544599_01.pdf"
+   }
+  ],
+  "270002544544": [
+   {
+    "arquivo": "propostas/270002544544.pdf",
+    "bytes": 1002369,
+    "original": "TO/2026TO270002544544_01.pdf"
+   }
+  ]
+ }
+}

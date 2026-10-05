@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Perfil temporário do navegador usado por scripts/paginas.py --imagens
+scripts/.perfil-navegador/
+
+# Editor e sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Segredos e logs (não há nenhum hoje; fica a proteção)
+.env
+.env.*
+*.log
