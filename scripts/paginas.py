@@ -12,6 +12,9 @@ Uso (na raiz do projeto, depois de scripts/segundo_turno.py):
   python scripts/paginas.py https://seu-projeto.pages.dev
   python scripts/paginas.py https://seu-projeto.pages.dev --imagens   (também gera as imagens, com o Edge ou o Chrome)
 
+Também grava no index.html o título, a descrição e os dados estruturados (Schema.org em JSON-LD, que o Google
+lê para entender o site), e gera public/robots.txt e public/sitemap.xml.
+
 Rode de novo sempre que mudar o endereço do site ou o arquivo dados/segundo-turno.json.
 """
 import html
@@ -21,6 +24,7 @@ import shutil
 import subprocess
 import sys
 import urllib.parse
+from datetime import date
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -63,6 +67,70 @@ def tags_og(site, url, titulo, descricao, imagem, alt):
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{e(alt)}">
 <meta name="twitter:card" content="summary_large_image">"""
+
+
+NOME = "Placar da Apuração 2026"
+TITULO = "Simulador do 2º turno 2026, propostas e apuração ao vivo · Placar da Apuração"   # igual ao de js/main.js (visão geral)
+AUTOR = {"@type": "Person", "name": "Luiz Carlos Porto", "url": "https://luizcporto.github.io/"}
+TSE = {"@type": "GovernmentOrganization", "name": "Tribunal Superior Eleitoral (TSE)", "url": "https://www.tse.jus.br/"}
+
+
+def schema(site, t2):
+    """Dados estruturados da página principal: o site, o aplicativo (SoftwareApplication) e o autor.
+    Sem nota de avaliação (aggregateRating): só entra quando houver avaliações reais de usuários."""
+    a, b = sorted(t2["presidente"]["cands"], key=lambda c: c["nome"])
+    finalistas = f"{nome(a['nome'])} e {nome(b['nome'])}"
+    n_gov = sum(1 for g in t2["governador"].values() if g["turno2"])
+    grafo = [
+        {"@type": "WebSite", "@id": site + "#site", "url": site, "name": NOME, "alternateName": "Placar da Apuração",
+         "inLanguage": "pt-BR", "publisher": {"@id": site + "#autor"}},
+        {**AUTOR, "@id": site + "#autor"},
+        {"@type": "SoftwareApplication", "@id": site + "#app", "name": NOME,
+         "alternateName": ["Simulador do 2º turno 2026", "Simulador de segundo turno 2026", "Placar da Apuração"],
+         "url": site, "isPartOf": {"@id": site + "#site"},
+         "description": (f"Simulador gratuito do 2º turno das Eleições 2026: escolha para onde vão os votos de cada candidato do 1º turno "
+                         f"e veja como ficaria a disputa entre {finalistas}. Compare os planos de governo oficiais dos finalistas a "
+                         f"Presidente e Governador e acompanhe a apuração ao vivo com os dados oficiais do TSE."),
+         "applicationCategory": "ReferenceApplication", "applicationSubCategory": "Eleições",
+         "operatingSystem": "Qualquer sistema com navegador (Android, iOS, Windows, macOS, Linux)",
+         "browserRequirements": "Requer JavaScript", "inLanguage": "pt-BR", "isAccessibleForFree": True,
+         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "BRL"},
+         "featureList": [
+             f"Simulador do 2º turno para Presidente: distribua entre {finalistas} os votos de cada candidato do 1º turno, dos brancos e nulos e de quem não votou, e veja o resultado na hora",
+             "Compartilhamento da simulação como imagem (WhatsApp, Instagram) ou como link",
+             "Comparativo dos planos de governo: propostas oficiais registradas no TSE pelos finalistas a Presidente e Governador",
+             "Resumo lado a lado dos dois planos de governo para Presidente, nos mesmos 10 temas",
+             f"Visão geral do 2º turno: Presidente e Governador em {n_gov} estados, com o resultado do 1º turno e os governadores eleitos no 1º turno",
+             "Apuração ao vivo com dados oficiais do TSE, atualizada a cada 30 segundos",
+             "Resultados do 1º turno para Presidente, Governador, Senador, Deputado Federal e Deputado Estadual ou Distrital em todos os estados",
+             "Mapa do Brasil com quem está na frente em cada estado",
+             "Gráfico da evolução da apuração, com estimativa por estado e comparativo com 2022",
+             "Resultado por região e onde ainda faltam votos a apurar",
+             "Busca de qualquer candidato em todos os cargos e estados",
+             "Patrimônio declarado pelos candidatos ao TSE",
+             "Favoritos para acompanhar disputas específicas",
+             "Contagem regressiva e orientações para votar no 2º turno",
+             "Continua funcionando se o TSE ficar fora do ar, com o último dado salvo",
+         ],
+         "keywords": (f"simulador 2º turno, simulador segundo turno 2026, eleições 2026, apuração 2026, resultado eleição 2026, "
+                      f"{nome(a['nome'])}, {nome(b['nome'])}, planos de governo, propostas de governo, TSE"),
+         "screenshot": site + "img/compartilhar.png", "image": site + "img/compartilhar.png",
+         "author": {"@id": site + "#autor"}, "publisher": {"@id": site + "#autor"},
+         "datePublished": "2026-10-04", "dateModified": date.today().isoformat(),
+         "about": {"@type": "Event", "name": "Eleições Gerais 2026 · 2º turno",
+                   "startDate": "2026-10-25T08:00:00-03:00", "endDate": "2026-10-25T17:00:00-03:00",
+                   "eventStatus": "https://schema.org/EventScheduled",
+                   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                   "location": {"@type": "Place", "name": "Brasil", "address": {"@type": "PostalAddress", "addressCountry": "BR"}},
+                   "organizer": TSE},
+         "isBasedOn": [
+             {"@type": "Dataset", "name": "Resultados oficiais das Eleições 2026", "url": "https://resultados.tse.jus.br/", "creator": TSE},
+             {"@type": "Dataset", "name": "Dados abertos do TSE: candidaturas, bens declarados e propostas de governo",
+              "url": "https://dadosabertos.tse.jus.br/", "creator": TSE},
+         ]},
+    ]
+    corpo = json.dumps({"@context": "https://schema.org", "@graph": grafo}, ensure_ascii=False, indent=1).replace("</", "<\\/")
+    return f'<script type="application/ld+json">\n{corpo}\n</script>'
 
 
 def pagina(site, pasta, titulo, descricao, destino, imagem, alt):
@@ -114,16 +182,30 @@ def main():
     t2 = json.loads((SITE / "dados" / "segundo-turno.json").read_text(encoding="utf-8"))
     pres_longo, pres_curto = duelo(t2["presidente"]["cands"])
 
-    # Prévia da página principal (bloco entre os marcadores og:inicio e og:fim do index.html)
+    # Página principal: título, descrição, prévia (bloco entre og:inicio e og:fim) e dados estruturados
     idx = SITE / "index.html"
     s = idx.read_text(encoding="utf-8")
-    bloco = tags_og(site, site, "2º turno · Eleições 2026 · Placar da Apuração",
-                    "Presidente e Governador no 2º turno de 25 de outubro: quem disputa em cada estado, o resultado do 1º turno e as propostas oficiais de cada candidato.",
-                    "img/compartilhar.png", "Placar da Apuração 2026 · 2º turno em 25 de outubro")
-    novo, n = re.subn(r"(<!-- og:inicio -->\n).*?(\n<!-- og:fim -->)", lambda m: m.group(1) + bloco + m.group(2), s, flags=re.S)
-    if not n:
-        raise SystemExit("Marcadores <!-- og:inicio --> / <!-- og:fim --> não encontrados no index.html")
-    idx.write_text(novo, encoding="utf-8")
+    descricao = (f"Simulador gratuito do 2º turno das Eleições 2026: escolha para onde vão os votos e veja como ficaria {pres_curto}. "
+                 f"Compare os planos de governo dos candidatos e acompanhe a apuração ao vivo com dados do TSE.")
+    bloco = tags_og(site, site, "Simulador do 2º turno 2026 · Placar da Apuração", descricao,
+                    "img/compartilhar.png", "Placar da Apuração 2026 · 2º turno em 25 de outubro") + "\n" + schema(site, t2)
+    e = lambda x: html.escape(x, quote=True)
+    trocas = [(r"(<!-- og:inicio -->\n).*?(\n<!-- og:fim -->)", lambda m: m.group(1) + bloco + m.group(2)),
+              (r"<title>.*?</title>", lambda m: f"<title>{e(TITULO)}</title>"),
+              (r'<meta name="description" content="[^"]*">', lambda m: f'<meta name="description" content="{e(descricao)}">')]
+    for padrao, troca in trocas:
+        s, n = re.subn(padrao, troca, s, count=1, flags=re.S)
+        if not n:
+            raise SystemExit(f"Não encontrei {padrao!r} no index.html")
+    idx.write_text(s, encoding="utf-8")
+
+    # Para o Google: o que pode ser rastreado e onde está a página principal
+    (SITE / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {site}sitemap.xml\n", encoding="utf-8")
+    (SITE / "sitemap.xml").write_text(f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>{e(site)}</loc><lastmod>{date.today().isoformat()}</lastmod></url>
+</urlset>
+""", encoding="utf-8")
 
     paginas = [("presidente", f"Presidente · 2º turno · {pres_curto}",
                 f"{pres_longo} no 2º turno de 25 de outubro. Resultado do 1º turno por estado, propostas oficiais dos candidatos e apuração ao vivo com dados do TSE.",

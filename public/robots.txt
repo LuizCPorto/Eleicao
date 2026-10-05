@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eleicao.luiz-porto.workers.dev/sitemap.xml

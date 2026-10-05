@@ -85,7 +85,7 @@ function updateTitle(){
   const t = state.turno;
   if (state.cargo === "geral"){
     $("title").textContent = "2º turno · Presidente e Governador";
-    document.title = "2º turno · Placar da Apuração 2026";
+    document.title = "Simulador do 2º turno 2026, propostas e apuração ao vivo · Placar da Apuração";   // igual ao <title> (scripts/paginas.py)
     $("flag").replaceChildren(bandeira("br", "bandeira"));
   } else {
     const nome = cargoNome(state.cargo, state.uf);

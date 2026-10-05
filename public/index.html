@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Placar da Apuração 2026</title>
-<meta name="description" content="2º turno das Eleições 2026 em 25 de outubro: Presidente e Governador, resultado do 1º turno por estado, propostas de governo dos candidatos e apuração ao vivo com dados oficiais do TSE.">
+<title>Simulador do 2º turno 2026, propostas e apuração ao vivo · Placar da Apuração</title>
+<meta name="description" content="Simulador gratuito do 2º turno das Eleições 2026: escolha para onde vão os votos e veja como ficaria Flavio Bolsonaro × Lula. Compare os planos de governo dos candidatos e acompanhe a apuração ao vivo com dados do TSE.">
 <meta name="theme-color" content="#070b17">
 
 <!-- Prévia de compartilhamento (WhatsApp, redes sociais). O bloco abaixo é preenchido por scripts/paginas.py
@@ -14,14 +14,135 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Placar da Apuração 2026">
-<meta property="og:title" content="2º turno · Eleições 2026 · Placar da Apuração">
-<meta property="og:description" content="Presidente e Governador no 2º turno de 25 de outubro: quem disputa em cada estado, o resultado do 1º turno e as propostas oficiais de cada candidato.">
+<meta property="og:title" content="Simulador do 2º turno 2026 · Placar da Apuração">
+<meta property="og:description" content="Simulador gratuito do 2º turno das Eleições 2026: escolha para onde vão os votos e veja como ficaria Flavio Bolsonaro × Lula. Compare os planos de governo dos candidatos e acompanhe a apuração ao vivo com dados do TSE.">
 <meta property="og:url" content="https://eleicao.luiz-porto.workers.dev/">
 <meta property="og:image" content="https://eleicao.luiz-porto.workers.dev/img/compartilhar.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Placar da Apuração 2026 · 2º turno em 25 de outubro">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://eleicao.luiz-porto.workers.dev/#site",
+   "url": "https://eleicao.luiz-porto.workers.dev/",
+   "name": "Placar da Apuração 2026",
+   "alternateName": "Placar da Apuração",
+   "inLanguage": "pt-BR",
+   "publisher": {
+    "@id": "https://eleicao.luiz-porto.workers.dev/#autor"
+   }
+  },
+  {
+   "@type": "Person",
+   "name": "Luiz Carlos Porto",
+   "url": "https://luizcporto.github.io/",
+   "@id": "https://eleicao.luiz-porto.workers.dev/#autor"
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://eleicao.luiz-porto.workers.dev/#app",
+   "name": "Placar da Apuração 2026",
+   "alternateName": [
+    "Simulador do 2º turno 2026",
+    "Simulador de segundo turno 2026",
+    "Placar da Apuração"
+   ],
+   "url": "https://eleicao.luiz-porto.workers.dev/",
+   "isPartOf": {
+    "@id": "https://eleicao.luiz-porto.workers.dev/#site"
+   },
+   "description": "Simulador gratuito do 2º turno das Eleições 2026: escolha para onde vão os votos de cada candidato do 1º turno e veja como ficaria a disputa entre Flavio Bolsonaro e Lula. Compare os planos de governo oficiais dos finalistas a Presidente e Governador e acompanhe a apuração ao vivo com os dados oficiais do TSE.",
+   "applicationCategory": "ReferenceApplication",
+   "applicationSubCategory": "Eleições",
+   "operatingSystem": "Qualquer sistema com navegador (Android, iOS, Windows, macOS, Linux)",
+   "browserRequirements": "Requer JavaScript",
+   "inLanguage": "pt-BR",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "BRL"
+   },
+   "featureList": [
+    "Simulador do 2º turno para Presidente: distribua entre Flavio Bolsonaro e Lula os votos de cada candidato do 1º turno, dos brancos e nulos e de quem não votou, e veja o resultado na hora",
+    "Compartilhamento da simulação como imagem (WhatsApp, Instagram) ou como link",
+    "Comparativo dos planos de governo: propostas oficiais registradas no TSE pelos finalistas a Presidente e Governador",
+    "Resumo lado a lado dos dois planos de governo para Presidente, nos mesmos 10 temas",
+    "Visão geral do 2º turno: Presidente e Governador em 7 estados, com o resultado do 1º turno e os governadores eleitos no 1º turno",
+    "Apuração ao vivo com dados oficiais do TSE, atualizada a cada 30 segundos",
+    "Resultados do 1º turno para Presidente, Governador, Senador, Deputado Federal e Deputado Estadual ou Distrital em todos os estados",
+    "Mapa do Brasil com quem está na frente em cada estado",
+    "Gráfico da evolução da apuração, com estimativa por estado e comparativo com 2022",
+    "Resultado por região e onde ainda faltam votos a apurar",
+    "Busca de qualquer candidato em todos os cargos e estados",
+    "Patrimônio declarado pelos candidatos ao TSE",
+    "Favoritos para acompanhar disputas específicas",
+    "Contagem regressiva e orientações para votar no 2º turno",
+    "Continua funcionando se o TSE ficar fora do ar, com o último dado salvo"
+   ],
+   "keywords": "simulador 2º turno, simulador segundo turno 2026, eleições 2026, apuração 2026, resultado eleição 2026, Flavio Bolsonaro, Lula, planos de governo, propostas de governo, TSE",
+   "screenshot": "https://eleicao.luiz-porto.workers.dev/img/compartilhar.png",
+   "image": "https://eleicao.luiz-porto.workers.dev/img/compartilhar.png",
+   "author": {
+    "@id": "https://eleicao.luiz-porto.workers.dev/#autor"
+   },
+   "publisher": {
+    "@id": "https://eleicao.luiz-porto.workers.dev/#autor"
+   },
+   "datePublished": "2026-10-04",
+   "dateModified": "2026-10-05",
+   "about": {
+    "@type": "Event",
+    "name": "Eleições Gerais 2026 · 2º turno",
+    "startDate": "2026-10-25T08:00:00-03:00",
+    "endDate": "2026-10-25T17:00:00-03:00",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+     "@type": "Place",
+     "name": "Brasil",
+     "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "BR"
+     }
+    },
+    "organizer": {
+     "@type": "GovernmentOrganization",
+     "name": "Tribunal Superior Eleitoral (TSE)",
+     "url": "https://www.tse.jus.br/"
+    }
+   },
+   "isBasedOn": [
+    {
+     "@type": "Dataset",
+     "name": "Resultados oficiais das Eleições 2026",
+     "url": "https://resultados.tse.jus.br/",
+     "creator": {
+      "@type": "GovernmentOrganization",
+      "name": "Tribunal Superior Eleitoral (TSE)",
+      "url": "https://www.tse.jus.br/"
+     }
+    },
+    {
+     "@type": "Dataset",
+     "name": "Dados abertos do TSE: candidaturas, bens declarados e propostas de governo",
+     "url": "https://dadosabertos.tse.jus.br/",
+     "creator": {
+      "@type": "GovernmentOrganization",
+      "name": "Tribunal Superior Eleitoral (TSE)",
+      "url": "https://www.tse.jus.br/"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
 <!-- og:fim -->
 
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
