@@ -1,6 +1,6 @@
 // Liga as partes da página: filtros, carregamento, abas, contador e compartilhamento
 import {UFS, REGIOES, CARGOS_T2, SO_PRESIDENTE, TURNOS, REFRESH_MS, REFRESH_LENTO_MS, POR_PAGINA, APP_TSE} from "./config.js";
-import {$, el, ufNome, cargoNome, bandeira, hora, ouvir} from "./util.js";
+import {$, el, ufNome, cargoNome, bandeira, hora, ouvir, avisar} from "./util.js";
 import {state, ui, lerUrl, escreverUrl, turnoPadrao} from "./estado.js";
 import {disputa, somar, getJson, url, limparCache, esquecer, aoBaixarPresBr, local as localJson} from "./dados.js";
 import {render, renderFinalistas, ocultos, salvarOcultos} from "./lista.js";
@@ -11,6 +11,7 @@ import {renderBusca, reiniciarBusca, buscando} from "./busca.js";
 import {segundoTurno, finalistas, pctT1, ufsGov2T, renderGeral, renderDecidido, renderPropostas} from "./segundo-turno.js";
 import {fase, textoCurto, preencherContagem} from "./contador.js";
 import {iniciarAvisoVoto} from "./aviso-voto.js";
+import {abrirSimulador, preencherChamada} from "./simulador.js";
 
 let T2 = null;              // resumo do 1º turno usado no 2º turno (dados/segundo-turno.json)
 let timer = null, nextAt = 0, loadSeq = 0;
@@ -77,6 +78,7 @@ function aplicarControles(){
   const geral = state.cargo === "geral";
   $("reg").hidden = geral; $("uf").hidden = geral;
   $("refresh").hidden = geral && fase(2) === "antes";
+  destaqueSim();
 }
 
 function updateTitle(){
@@ -210,6 +212,16 @@ function schedule(ms){
   timer = setTimeout(() => { limparCache(); load(); }, ms);
 }
 
+/* ---------- Destaque do simulador: botão no topo e chamada na visão geral, até o fim da votação ---------- */
+const temSim = () => !!(T2 && T2.presidente.t1);
+function destaqueSim(){
+  const ativo = temSim() && fase(2) !== "apuracao";
+  $("simChamada").hidden = !ativo;
+  $("irSim").hidden = !ativo || simulando();
+}
+const irParaSim = () => avisar("navegar", {turno:2, cargo:"pres", uf:"br", aba:"sim"});
+$("irSim").onclick = irParaSim;
+
 /* ---------- Topo: ao vivo ou contagem regressiva ---------- */
 function tick(){
   const t = state.turno, fs = fase(t);
@@ -223,28 +235,37 @@ function tick(){
   live.classList.toggle("pulso", pulso); live.classList.toggle("off", off);
   $("liveTxt").textContent = txt;
   if (!$("geral").hidden) preencherContagem($("contagem"), 2);
+  destaqueSim();
 }
 
-/* ---------- Abas Resultados / Mapa / Evolução (só em Presidente · Brasil, com dados) ---------- */
-const ABAS = [["res","aba-res","painelRes"], ["mapa","aba-mapa","mapa"], ["evo","aba-evo","evolucao"]];
+/* ---------- Abas Resultados / Mapa / Evolução / Simulador (só em Presidente · Brasil) ---------- */
+// Mapa e evolução precisam de dados da apuração; o simulador só existe no 2º turno e usa o resultado do 1º
+const ABAS = [["res","aba-res","painelRes"], ["mapa","aba-mapa","mapa"], ["evo","aba-evo","evolucao"], ["sim","aba-sim","simulador"]];
+let abasVisiveis = [];
 function aplicarAbas(d){
-  const presBr = state.cargo==="pres" && state.uf==="br" && !!d;
-  const atual = presBr ? ui.aba : "res";
-  $("abas").hidden = !presBr;
+  const presBr = state.cargo==="pres" && state.uf==="br";
+  const disp = presBr ? ["res", ...(d ? ["mapa","evo"] : []), ...(state.turno===2 && temSim() ? ["sim"] : [])] : [];
+  abasVisiveis = disp.length > 1 ? disp : [];
+  const atual = abasVisiveis.includes(ui.aba) ? ui.aba : "res";
+  $("abas").hidden = !abasVisiveis.length;
   for (const [k, botao, painel] of ABAS){
+    $(botao).hidden = !abasVisiveis.includes(k);
     $(botao).setAttribute("aria-selected", String(k===atual)); $(botao).tabIndex = k===atual ? 0 : -1;
     $(painel).hidden = k!==atual;
   }
-  // mapa, gráfico e estimativa só são calculados com a aba aberta
+  // mapa, gráfico, estimativa e simulador só são montados com a aba aberta
   if (d && atual==="evo") atualizarEvolucao(d, state.turno);
   if (d && atual==="mapa") atualizarMapa(d, state.turno, state.turno===2 && T2 ? T2.presidente.porUf : null);
+  if (atual==="sim") abrirSimulador(T2);
+  destaqueSim();
 }
 function trocarAba(a){ ui.aba = a; aplicarAbas(ui.lastData); escreverUrl(); }
 for (const [k, botao] of ABAS) $(botao).onclick = () => trocarAba(k);
 $("abas").addEventListener("keydown", e => {
   if (e.key!=="ArrowLeft" && e.key!=="ArrowRight") return;
-  const i = ABAS.findIndex(a => a[0]===ui.aba), n = ABAS.length;
-  const prox = ABAS[(i + (e.key==="ArrowRight" ? 1 : n-1)) % n];
+  const vis = ABAS.filter(a => abasVisiveis.includes(a[0]));
+  const i = Math.max(0, vis.findIndex(a => a[0]===ui.aba)), n = vis.length;
+  const prox = vis[(i + (e.key==="ArrowRight" ? 1 : n-1)) % n];
   trocarAba(prox[0]); $(prox[1]).focus();
   e.preventDefault();
 });
@@ -285,9 +306,9 @@ ouvir("ir-para", r => {
   setCargo(r.cargo);
 });
 // Botões da visão geral, mapa e telas do 2º turno
-ouvir("navegar", ({turno, cargo, uf}) => {
+ouvir("navegar", ({turno, cargo, uf, aba}) => {
   if (turno) state.turno = turno;
-  state.reg = "todas"; state.uf = uf; state.cargo = cargo; ui.aba = "res";
+  state.reg = "todas"; state.uf = uf; state.cargo = cargo; ui.aba = aba || "res";
   mudouFiltro();
   window.scrollTo({top:0});
 });
@@ -311,12 +332,15 @@ $("reset").onclick = () => {
   mudouFiltro();
 };
 
+const simulando = () => vista()==="disputa" && state.cargo==="pres" && state.uf==="br" && !$("simulador").hidden;
+
 // Link para compartilhar: quando a tela tem página própria (gerada por scripts/paginas.py), usa o link curto
 // (ex.: <site>/rj/), que traz a prévia daquele estado no WhatsApp; senão, o endereço com os filtros
 async function linkCompartilhar(){
   let pags = [];
   try { pags = (await localJson("paginas")).paginas || []; } catch {}
   const base = new URL(".", location.href).href;
+  if (simulando()) return location.href;   // o link leva a simulação junto
   if (state.turno === 2 && T2){
     if (state.cargo === "geral") return base;
     if (state.cargo === "pres" && state.uf === "br" && pags.includes("presidente")) return base + "presidente/";
@@ -331,6 +355,7 @@ async function linkCompartilhar(){
 $("compartilhar").onclick = async () => {
   const texto = state.cargo === "geral"
     ? "2º turno das Eleições 2026: Presidente e Governador, com as propostas de cada candidato"
+    : simulando() ? "Minha simulação do 2º turno para Presidente. Faça a sua"
     : `${cargoNome(state.cargo, state.uf)} · ${local()} · ${state.turno}º turno das Eleições 2026`;
   const link = await linkCompartilhar();
   if (navigator.share){
@@ -344,6 +369,7 @@ $("compartilhar").onclick = async () => {
 iniciarAvisoVoto();
 try { T2 = await segundoTurno(); } catch { T2 = null; }
 lerUrl();
+if (temSim()) preencherChamada($("simChamada"), T2, irParaSim);
 if (!T2 && state.turno === 2){ state.turno = 1; if (state.cargo === "geral") state.cargo = "pres"; }   // sem o arquivo do 2º turno, fica no 1º
 buildRegSelect(); buildUfSelect(); aplicarControles(); updateTitle(); escreverUrl(); mostrarVista();
 load();

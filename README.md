@@ -30,10 +30,11 @@ public/                 TUDO o que vai para o ar (pasta publicada na Cloudflare)
     dados.js            busca no TSE, plano B (último dado salvo), arquivos locais
     lista.js            lista de candidatos
     segundo-turno.js    visão geral, duelos, estado decidido, propostas
+    simulador.js        simulador do 2º turno de Presidente (transferência de votos, imagem e link)
     contador.js         contagem regressiva
     mapa.js, evolucao.js, busca.js, favoritos.js, patrimonio.js, util.js
   dados/
-    segundo-turno.json  quem disputa o 2º turno e o resultado do 1º (gerado por script)
+    segundo-turno.json  quem disputa o 2º turno e o resultado do 1º, inclusive o nacional completo usado no simulador (gerado por script)
     propostas.json      índice dos PDFs de propostas (gerado por script)
     paginas.json        páginas de compartilhamento existentes (gerado por script)
     resumos.json        resumo opcional das propostas por tema (preenchido à mão)

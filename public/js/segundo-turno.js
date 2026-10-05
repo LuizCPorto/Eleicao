@@ -36,9 +36,16 @@ export function renderGeral(t2, vivos = {}){
   const pres = el("section", "bloco");
   pres.innerHTML = `<div class="bloco-top"><h2>Presidente</h2><span>Brasil · candidatos em ordem alfabética</span></div>`;
   pres.appendChild(duelo("pres", "br", t2.presidente.cands, vivos["pres|br"], true));
+  const acoes = el("div", "bloco-acoes");
   const ver = el("button", "btn btn-destaque", "Ver disputa, mapa por estado e propostas →");
   ver.onclick = () => avisar("navegar", {cargo:"pres", uf:"br"});
-  pres.appendChild(ver);
+  acoes.appendChild(ver);
+  if (t2.presidente.t1){
+    const sim = el("button", "btn", "Simule o 2º turno →");
+    sim.onclick = () => avisar("navegar", {cargo:"pres", uf:"br", aba:"sim"});
+    acoes.appendChild(sim);
+  }
+  pres.appendChild(acoes);
   box.appendChild(pres);
 
   // Governador: mapa + duelos por estado + decididos no 1º turno

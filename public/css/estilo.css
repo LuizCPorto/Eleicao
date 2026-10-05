@@ -331,3 +331,61 @@ li.c.sem-rank{grid-template-columns:56px 1fr auto}
 li.c.sem-rank .rank{display:none}
 li.c.sem-rank .bar{grid-column:2 / 4}
 @media (max-width:480px){ li.c.sem-rank{grid-template-columns:44px 1fr auto} }
+
+/* Simulador do 2º turno (Presidente) */
+.bloco-acoes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.sim-placar{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;padding:14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)}
+.sim-lado{display:grid;gap:2px;min-width:0;grid-row:span 4;grid-template-rows:subgrid;align-content:start}   /* subgrid: os % ficam na mesma altura mesmo se um nome quebrar a linha */
+.sim-lado[data-lado="b"]{text-align:right}
+.sim-lado .name{font-size:clamp(20px,4vw,28px);overflow-wrap:anywhere}
+.sim-lado .p{font:700 clamp(40px,9vw,64px)/1 var(--display);font-variant-numeric:tabular-nums;margin-top:6px}
+.sim-lado .v{font:12px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.sim-barra{grid-column:1 / -1;position:relative;display:flex;justify-content:space-between;height:16px;border-radius:4px;background:var(--line);overflow:hidden}
+.sim-barra span{display:block;height:100%}
+.sim-barra i{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--on-bg)}
+.sim-acoes,.sim-presets{display:flex;flex-wrap:wrap;gap:8px}
+.simulador h3{margin:10px 0 0}
+.sim-fontes{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.sim-fonte{display:grid;gap:6px;align-content:start;padding:12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)}
+.sim-fonte.mudou{border-color:rgba(232,184,74,.45)}
+.sim-nome{display:flex;align-items:center;gap:8px;min-width:0}
+.sim-nome i{width:10px;height:10px;border-radius:50%;flex:none}
+.sim-nome b{font:700 18px/1.1 var(--display);text-transform:uppercase;letter-spacing:.01em;overflow-wrap:anywhere}
+.sim-info,.sim-resto{font:12px var(--mono);color:var(--muted)}
+.sim-mini{display:flex;justify-content:space-between;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.sim-mini span{display:block;height:100%}
+.sim-ctl{display:grid;grid-template-columns:1fr auto;align-items:center;gap:0 8px;font-size:13px;color:var(--muted)}
+.sim-ctl b{color:var(--fg);font-weight:600}
+.sim-ctl output{font:600 14px var(--body);color:var(--fg);font-variant-numeric:tabular-nums;min-width:3.5ch;text-align:right}
+.sim-ctl input[type=range]{grid-column:1 / -1;width:100%;margin:2px 0;padding:0;border:0;background:none;flex:none;min-height:24px;cursor:pointer;backdrop-filter:none;-webkit-backdrop-filter:none}
+.sim-outros summary{cursor:pointer;font-size:13px;color:var(--gold);margin-bottom:10px}
+.sim-outros summary:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+@media (max-width:480px){ .sim-placar{padding:12px} .sim-presets .btn,.sim-acoes .btn{flex:1 1 100%} }
+
+/* Destaque do simulador: botão no topo e chamada na visão geral */
+.topo-acoes{display:flex;flex-wrap:wrap;gap:8px}
+.btn-sim{box-shadow:0 0 0 0 rgba(232,184,74,.5);animation:chama 2.4s ease-out 3}
+@keyframes chama{0%{box-shadow:0 0 0 0 rgba(232,184,74,.55)}70%,100%{box-shadow:0 0 0 12px rgba(232,184,74,0)}}
+@media (prefers-reduced-motion:reduce){ .btn-sim{animation:none} }
+.abas .tag{margin-left:6px;padding:0 6px;font-size:10px}
+.sim-chamada{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;padding:20px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(232,184,74,.20),rgba(225,72,95,.14));border:1px solid var(--gold)}
+@media (min-width:760px){ .sim-chamada{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:center;padding:24px} }
+.sim-chamada-txt{display:grid;gap:10px;justify-items:start}
+.sim-chamada-eyebrow{display:flex;align-items:center;gap:8px;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.sim-chamada-eyebrow .tag{margin:0}
+.sim-chamada h2{margin:0;font:700 clamp(34px,6vw,48px)/1 var(--display);text-transform:uppercase;letter-spacing:.01em;color:var(--on-bg)}
+.sim-chamada p{margin:0;font-size:15px}
+.btn-grande{padding:12px 20px;font-size:16px}
+.sim-chamada-nota{font-size:13px;color:var(--on-bg-muted)}
+.sim-chamada-graf{display:grid;gap:8px;min-width:0}
+.sim-chamada-rot{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sim-eleitorado{display:flex;height:22px;border-radius:5px;overflow:hidden;background:var(--line)}
+.sim-eleitorado span{display:block;height:100%;min-width:2px}
+.jogo{background:repeating-linear-gradient(45deg,#e8b84a 0 4px,#b98b2a 4px 8px)}
+.jogo.bn{background:repeating-linear-gradient(45deg,#8a93ad 0 4px,#5f6782 4px 8px)}
+.jogo.ab{background:repeating-linear-gradient(45deg,#4a5272 0 4px,#353c58 4px 8px)}
+.sim-chamada-leg{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13px}
+.sim-chamada-leg li{display:grid;grid-template-columns:14px 1fr auto;gap:8px;align-items:center}
+.sim-chamada-leg i{width:14px;height:12px;border-radius:2px}
+.sim-chamada-leg b{font-weight:600;font-variant-numeric:tabular-nums}

@@ -3,6 +3,8 @@
 O arquivo diz quem disputa o 2º turno (Presidente e Governador), com o percentual de cada um
 no 1º turno, e quem já foi eleito no 1º turno. O site usa esse arquivo na tela do 2º turno
 antes de o TSE publicar os dados da nova votação, e para mostrar "no 1º turno: X%".
+Também guarda o resultado nacional completo de Presidente (todos os candidatos, brancos, nulos
+e abstenção), ponto de partida do simulador do 2º turno.
 
 Uso (na raiz do projeto):  python scripts/segundo_turno.py
 Só usa a biblioteca padrão do Python.
@@ -75,6 +77,14 @@ def main():
         por_uf[uf] = {i: cs.get(i, 0) for i in ids}
     por_uf["br"] = {c["id"]: c["pct"] for c in pres}
 
+    # Resultado nacional completo do 1º turno, para o simulador
+    v, e = pres_br["v"], pres_br["e"]
+    t1 = {
+        "eleitores": int(e["te"]), "comparecimento": int(e["c"]), "abstencao": int(e["a"]),
+        "validos": int(v["vv"]), "brancos": int(v["vb"]), "nulos": int(v["tvn"]),
+        "cands": [enxuto(c) for c in candidatos(pres_br)],
+    }
+
     gov = {}
     for uf in UFS:
         j = baixar(f"{BASE}/{ELE_EST}/dados/{uf}/{uf}-c0003-e00{ELE_EST}-u.json")
@@ -85,7 +95,7 @@ def main():
     saida = {
         "gerado": datetime.now().strftime("%d/%m/%Y %H:%M"),
         "fonte": "Resultado do 1º turno (TSE, resultados.tse.jus.br)",
-        "presidente": {"cands": [enxuto(c) for c in pres], "porUf": por_uf},
+        "presidente": {"cands": [enxuto(c) for c in pres], "porUf": por_uf, "t1": t1},
         "governador": gov,
     }
     SAIDA.write_text(json.dumps(saida, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

@@ -3,12 +3,12 @@ import {CARGOS, CARGOS_T2, UFS, REGIOES, TURNOS, POR_PAGINA} from "./config.js";
 
 // cargo "geral" = visão geral do 2º turno. uf "reg" = soma da região inteira (só Presidente)
 export const state = {turno:1, cargo:"pres", reg:"todas", uf:"br", q:"", limite:POR_PAGINA};
-export const ui = {aba:"res", destaque:null, openId:null, lastData:null};
+export const ui = {aba:"res", destaque:null, openId:null, lastData:null, sim:""};   // sim: simulação do 2º turno (js/simulador.js)
 
 // Depois que o 1º turno acabou, quem chega sem filtro na URL cai na visão geral do 2º turno
 export const turnoPadrao = () => Date.now() > TURNOS[1].fecha + 12*3600e3 ? 2 : 1;
 
-const ABA_SLUG = {res:null, mapa:"mapa", evo:"evolucao"};
+const ABA_SLUG = {res:null, mapa:"mapa", evo:"evolucao", sim:"simulador"};
 
 export function lerUrl(){
   const p = new URLSearchParams(location.search);
@@ -24,6 +24,7 @@ export function lerUrl(){
   else state.uf = "br";   // o seletor de estado troca pelo primeiro estado da lista se "br" não valer para o cargo
   const aba = Object.entries(ABA_SLUG).find(([,s]) => s && s===p.get("aba"));
   ui.aba = aba ? aba[0] : "res";
+  ui.sim = p.get("sim") || "";
 }
 
 export function escreverUrl(){
@@ -33,7 +34,10 @@ export function escreverUrl(){
     p.set("cargo", CARGOS[state.cargo].slug);
     if (state.uf === "reg"){ p.set("uf", "regiao"); p.set("regiao", state.reg); }
     else if (!(state.cargo==="pres" && state.uf==="br")) p.set("uf", state.uf.toUpperCase());
-    if (ABA_SLUG[ui.aba] && state.cargo==="pres" && state.uf==="br") p.set("aba", ABA_SLUG[ui.aba]);
+    if (ABA_SLUG[ui.aba] && state.cargo==="pres" && state.uf==="br" && (ui.aba!=="sim" || state.turno===2)){
+      p.set("aba", ABA_SLUG[ui.aba]);
+      if (ui.aba==="sim" && ui.sim) p.set("sim", ui.sim);
+    }
   }
   const nova = `${location.pathname}?${p}`;
   if (nova !== location.pathname + location.search) history.replaceState(null, "", nova);

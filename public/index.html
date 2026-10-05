@@ -59,7 +59,10 @@
           <button data-turno="1" aria-pressed="false">1º turno <small>4/out</small></button>
           <button data-turno="2" aria-pressed="false">2º turno <small>25/out</small></button>
         </div>
+        <div class="topo-acoes">
+        <button class="btn btn-destaque btn-sim" id="irSim" hidden>Simule o 2º turno →</button>
         <button class="btn btn-compartilhar" id="compartilhar" title="Compartilhar este link já com o turno, o cargo e o estado escolhidos">Compartilhar ↗</button>
+        </div>
       </div>
       <div class="controls">
         <div class="seg" role="group" aria-label="Cargo">
@@ -85,6 +88,8 @@
 
       <!-- Visão geral do 2º turno -->
       <div class="geral" id="geral" hidden>
+        <!-- Chamada para o simulador (até o fim da votação do 2º turno); preenchida por js/simulador.js -->
+        <section class="sim-chamada" id="simChamada" aria-labelledby="simChamadaTit" hidden></section>
         <section class="contagem" id="contagem" aria-live="off">
           <div class="cont-num"></div>
           <p class="cont-txt"></p>
@@ -109,11 +114,12 @@
         </div>
       </section>
 
-      <!-- Abas (só em Presidente · Brasil): resultados, mapa ou gráfico de evolução -->
+      <!-- Abas (só em Presidente · Brasil): resultados, mapa, gráfico de evolução ou simulador do 2º turno -->
       <div class="abas" id="abas" role="tablist" aria-label="Visualização" hidden>
         <button role="tab" id="aba-res" aria-selected="true" aria-controls="painelRes">Resultados</button>
         <button role="tab" id="aba-mapa" aria-selected="false" aria-controls="mapa" tabindex="-1">Mapa</button>
         <button role="tab" id="aba-evo" aria-selected="false" aria-controls="evolucao" tabindex="-1">Evolução da apuração</button>
+        <button role="tab" id="aba-sim" aria-selected="false" aria-controls="simulador" tabindex="-1" hidden>Simulador <span class="tag">Novo</span></button>
       </div>
 
       <div class="painel-res" id="painelRes" role="tabpanel" aria-labelledby="aba-res">
@@ -162,6 +168,9 @@
           <div class="tabela-wrap"><table class="ev-tabela" id="evTabela"></table></div>
         </details>
       </section>
+
+      <!-- Simulador do 2º turno (montado por js/simulador.js quando a aba abre) -->
+      <section class="evolucao simulador" id="simulador" role="tabpanel" aria-labelledby="aba-sim" hidden></section>
 
       <section class="propostas bloco" id="propostas" hidden></section>
       </div>
