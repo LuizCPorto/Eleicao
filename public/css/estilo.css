@@ -26,6 +26,17 @@ main{display:grid;gap:20px;min-width:0}
 /* No celular a coluna lateral se desfaz: favoritos sobem para o topo e os anúncios descem para depois do conteúdo (uma cópia só de cada anúncio) */
 @media (max-width:999px){ aside{display:contents} #favs{order:-1} #favs.vazio{display:none} .anuncios{order:1} }
 header{display:grid;gap:4px}
+/* Aviso de incentivo ao voto (neutro, some no fim da votação do 2º turno) */
+.aviso-voto{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;padding:12px 14px;border-radius:12px;background:var(--accent-soft);border:1px solid rgba(232,184,74,.45);border-left:4px solid var(--gold)}
+.aviso-voto[hidden]{display:none}
+.aviso-voto strong{display:block;font:700 20px/1.15 var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--gold)}
+.aviso-voto p{margin:4px 0 0;font-size:14px}
+.aviso-voto-links{display:flex;flex-wrap:wrap;gap:6px 16px}
+.aviso-voto-links a{color:var(--gold);font-weight:600;text-underline-offset:2px}
+.aviso-voto-fechar{all:unset;cursor:pointer;width:32px;height:32px;display:grid;place-items:center;border-radius:8px;font-size:22px;line-height:1;color:var(--muted)}
+.aviso-voto-fechar:hover{color:var(--fg);background:var(--surface-2)}
+.aviso-voto-fechar:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+@media (max-width:480px){ .aviso-voto{padding:10px 12px} .aviso-voto strong{font-size:18px} .aviso-voto p{font-size:13px} }
 .eyebrow{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--on-bg-muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .live{display:inline-flex;align-items:center;gap:6px;color:var(--live)}
 .live i{width:8px;height:8px;border-radius:50%;background:currentColor;animation:pulse 1.6s infinite}
@@ -310,6 +321,7 @@ li.c.sem-rank .num .t1{font-size:14px}
 .resumo{display:grid;gap:8px}
 .resumo h3{margin:6px 0 0;font:700 18px/1.1 var(--display);text-transform:uppercase;letter-spacing:.02em}
 .aviso-ia{margin:0;padding:8px 12px;border-radius:8px;border-left:4px solid var(--gold);background:var(--accent-soft);font-size:13px}
+.resumo-link{justify-self:start}
 .resumo-tab td{white-space:normal;text-align:left!important;vertical-align:top;min-width:160px}
 .resumo-tab th{white-space:normal;text-align:left!important}
 .mini .lado .name{font-size:17px}

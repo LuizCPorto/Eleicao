@@ -10,6 +10,7 @@ import {atualizarMapa} from "./mapa.js";
 import {renderBusca, reiniciarBusca, buscando} from "./busca.js";
 import {segundoTurno, finalistas, pctT1, ufsGov2T, renderGeral, renderDecidido, renderPropostas} from "./segundo-turno.js";
 import {fase, textoCurto, preencherContagem} from "./contador.js";
+import {iniciarAvisoVoto} from "./aviso-voto.js";
 
 let T2 = null;              // resumo do 1º turno usado no 2º turno (dados/segundo-turno.json)
 let timer = null, nextAt = 0, loadSeq = 0;
@@ -340,6 +341,7 @@ $("compartilhar").onclick = async () => {
 };
 
 /* ---------- Início ---------- */
+iniciarAvisoVoto();
 try { T2 = await segundoTurno(); } catch { T2 = null; }
 lerUrl();
 if (!T2 && state.turno === 2){ state.turno = 1; if (state.cargo === "geral") state.cargo = "pres"; }   // sem o arquivo do 2º turno, fica no 1º

@@ -161,6 +161,18 @@ export async function renderPropostas(cargo, uf, cands){
   }
   box.appendChild(grade);
 
+  // Resumo em PDF dos dois planos (só Presidente): mesmos temas e mesmo número de propostas para os dois
+  if (cargo === "pres"){
+    const sec = el("div", "resumo");
+    sec.appendChild(el("h3", null, "Resumo das propostas"));
+    sec.appendChild(el("p", "aviso-ia", "Resumo feito com auxílio de inteligência artificial a partir dos dois planos oficiais: os mesmos 10 temas e 4 propostas por tema para cada candidato, com a página do original. Um resumo sempre deixa coisas de fora; confira o documento oficial."));
+    const link = el("a", "prop-link resumo-link");
+    link.href = "resumos/presidente-2turno.pdf"; link.target = "_blank"; link.rel = "noopener";
+    link.append("Ver resumo das propostas lado a lado", el("small", null, "PDF · 3 páginas"));
+    sec.appendChild(link);
+    box.appendChild(sec);
+  }
+
   // Resumo por tema (opcional)
   const completo = resumos && resumos.temas && resumos.temas.length &&
     ordem.every(c => resumos.cands && resumos.cands[c.id] && resumos.temas.every(t => (resumos.cands[c.id][t]||"").trim()));
