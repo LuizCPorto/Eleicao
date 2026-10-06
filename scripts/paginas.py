@@ -117,16 +117,23 @@ def schema(site, t2):
          "screenshot": site + "img/compartilhar.png", "image": site + "img/compartilhar.png",
          "author": {"@id": site + "#autor"}, "publisher": {"@id": site + "#autor"},
          "datePublished": "2026-10-04", "dateModified": date.today().isoformat(),
+         # Evento: sem "offers" (votar não tem ingresso) nem "performer" (não há atração); o Google aponta
+         # os dois só como melhoria opcional
          "about": {"@type": "Event", "name": "Eleições Gerais 2026 · 2º turno",
+                   "description": (f"2º turno das Eleições Gerais 2026: votação para Presidente ({finalistas}) em todo o país "
+                                   f"e para Governador em {n_gov} estados, das 8h às 17h (horário de Brasília)."),
+                   "image": site + "img/compartilhar.png",
                    "startDate": "2026-10-25T08:00:00-03:00", "endDate": "2026-10-25T17:00:00-03:00",
                    "eventStatus": "https://schema.org/EventScheduled",
                    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
                    "location": {"@type": "Place", "name": "Brasil", "address": {"@type": "PostalAddress", "addressCountry": "BR"}},
                    "organizer": TSE},
+         # Fontes como CreativeWork (não Dataset): o site não publica os conjuntos de dados, só os usa; marcados como
+         # Dataset, o Google os trata como candidatos à busca de conjuntos de dados e cobra campos que não cabem aqui
          "isBasedOn": [
-             {"@type": "Dataset", "name": "Resultados oficiais das Eleições 2026", "url": "https://resultados.tse.jus.br/", "creator": TSE},
-             {"@type": "Dataset", "name": "Dados abertos do TSE: candidaturas, bens declarados e propostas de governo",
-              "url": "https://dadosabertos.tse.jus.br/", "creator": TSE},
+             {"@type": "CreativeWork", "name": "Resultados oficiais das Eleições 2026", "url": "https://resultados.tse.jus.br/", "publisher": TSE},
+             {"@type": "CreativeWork", "name": "Dados abertos do TSE: candidaturas, bens declarados e propostas de governo",
+              "url": "https://dadosabertos.tse.jus.br/", "publisher": TSE},
          ]},
     ]
     corpo = json.dumps({"@context": "https://schema.org", "@graph": grafo}, ensure_ascii=False, indent=1).replace("</", "<\\/")
