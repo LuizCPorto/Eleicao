@@ -1,28 +1,29 @@
 <!doctype html>
+<!-- Gerado por scripts/paginas.py a partir de index.html: não edite aqui -->
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <!-- Base fixa: o endereço muda para simulador/ sem recarregar (js/estado.js) e os caminhos relativos continuam na raiz -->
-<base href="./">
+<base href="../">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Simulador do 2º turno 2026, propostas e apuração ao vivo · Placar da Apuração</title>
-<meta name="description" content="Simulador gratuito do 2º turno das Eleições 2026: escolha para onde vão os votos e veja como ficaria Flavio Bolsonaro × Lula. Compare os planos de governo dos candidatos e acompanhe a apuração ao vivo com dados do TSE.">
+<title>Simulador do 2º turno 2026: Flavio Bolsonaro × Lula · Placar da Apuração</title>
+<meta name="description" content="Simule o 2º turno 2026 para Presidente: decida para onde vão os votos do 1º turno e veja como ficaria Flavio Bolsonaro × Lula. Grátis, com dados oficiais do TSE.">
 <meta name="theme-color" content="#070b17">
 
 <!-- Prévia de compartilhamento (WhatsApp, redes sociais). O bloco abaixo é preenchido por scripts/paginas.py
      com o endereço publicado do site (og:image e og:url precisam do endereço completo). -->
 <!-- og:inicio -->
-<link rel="canonical" href="https://eleicao.luiz-porto.workers.dev/">
+<link rel="canonical" href="https://eleicao.luiz-porto.workers.dev/simulador/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Placar da Apuração 2026">
-<meta property="og:title" content="Simulador do 2º turno 2026 · Placar da Apuração">
-<meta property="og:description" content="Simulador gratuito do 2º turno das Eleições 2026: escolha para onde vão os votos e veja como ficaria Flavio Bolsonaro × Lula. Compare os planos de governo dos candidatos e acompanhe a apuração ao vivo com dados do TSE.">
-<meta property="og:url" content="https://eleicao.luiz-porto.workers.dev/">
-<meta property="og:image" content="https://eleicao.luiz-porto.workers.dev/img/compartilhar.png">
+<meta property="og:title" content="Simulador do 2º turno 2026 · Flavio Bolsonaro × Lula">
+<meta property="og:description" content="Para onde vão os votos? Monte o seu cenário do 2º turno com o resultado oficial do 1º turno e compartilhe.">
+<meta property="og:url" content="https://eleicao.luiz-porto.workers.dev/simulador/">
+<meta property="og:image" content="https://eleicao.luiz-porto.workers.dev/img/compartilhar/simulador.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Placar da Apuração 2026 · 2º turno em 25 de outubro">
+<meta property="og:image:alt" content="Simulador do 2º turno · Flavio Bolsonaro × Lula">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {
@@ -33,7 +34,6 @@
    "@id": "https://eleicao.luiz-porto.workers.dev/#site",
    "url": "https://eleicao.luiz-porto.workers.dev/",
    "name": "Placar da Apuração 2026",
-   "alternateName": "Placar da Apuração",
    "inLanguage": "pt-BR",
    "publisher": {
     "@id": "https://eleicao.luiz-porto.workers.dev/#autor"
@@ -47,18 +47,17 @@
   },
   {
    "@type": "SoftwareApplication",
-   "@id": "https://eleicao.luiz-porto.workers.dev/#app",
-   "name": "Placar da Apuração 2026",
+   "@id": "https://eleicao.luiz-porto.workers.dev/simulador/#app",
+   "name": "Simulador do 2º turno 2026",
    "alternateName": [
-    "Simulador do 2º turno 2026",
     "Simulador de segundo turno 2026",
-    "Placar da Apuração"
+    "Simulador do 2º turno para Presidente"
    ],
-   "url": "https://eleicao.luiz-porto.workers.dev/",
+   "url": "https://eleicao.luiz-porto.workers.dev/simulador/",
    "isPartOf": {
     "@id": "https://eleicao.luiz-porto.workers.dev/#site"
    },
-   "description": "Simulador gratuito do 2º turno das Eleições 2026: escolha para onde vão os votos de cada candidato do 1º turno e veja como ficaria a disputa entre Flavio Bolsonaro e Lula. Compare os planos de governo oficiais dos finalistas a Presidente e Governador e acompanhe a apuração ao vivo com os dados oficiais do TSE.",
+   "description": "Simulador gratuito do 2º turno para Presidente: decida para onde vão os votos de cada candidato do 1º turno, dos brancos e nulos e de quem não votou, e veja como ficaria a disputa entre Flavio Bolsonaro e Lula. Usa o resultado oficial do 1º turno (TSE). Não é pesquisa nem previsão.",
    "applicationCategory": "ReferenceApplication",
    "applicationSubCategory": "Eleições",
    "operatingSystem": "Qualquer sistema com navegador (Android, iOS, Windows, macOS, Linux)",
@@ -71,78 +70,31 @@
     "priceCurrency": "BRL"
    },
    "featureList": [
-    "Simulador do 2º turno para Presidente: distribua entre Flavio Bolsonaro e Lula os votos de cada candidato do 1º turno, dos brancos e nulos e de quem não votou, e veja o resultado na hora",
+    "Distribua entre Flavio Bolsonaro e Lula os votos de cada candidato do 1º turno, dos brancos e nulos e de quem não votou",
+    "Resultado na hora, em votos e em percentual dos votos válidos",
     "Compartilhamento da simulação como imagem (WhatsApp, Instagram) ou como link",
-    "Comparativo dos planos de governo: propostas oficiais registradas no TSE pelos finalistas a Presidente e Governador",
-    "Resumo lado a lado dos dois planos de governo para Presidente, nos mesmos 10 temas",
-    "Visão geral do 2º turno: Presidente e Governador em 7 estados, com o resultado do 1º turno e os governadores eleitos no 1º turno",
-    "Apuração ao vivo com dados oficiais do TSE, atualizada a cada 30 segundos",
-    "Resultados do 1º turno para Presidente, Governador, Senador, Deputado Federal e Deputado Estadual ou Distrital em todos os estados",
-    "Mapa do Brasil com quem está na frente em cada estado",
-    "Gráfico da evolução da apuração, com estimativa por estado e comparativo com 2022",
-    "Resultado por região e onde ainda faltam votos a apurar",
-    "Busca de qualquer candidato em todos os cargos e estados",
-    "Patrimônio declarado pelos candidatos ao TSE",
-    "Favoritos para acompanhar disputas específicas",
-    "Contagem regressiva e orientações para votar no 2º turno",
-    "Continua funcionando se o TSE ficar fora do ar, com o último dado salvo"
+    "Ponto de partida no resultado oficial do 1º turno (TSE)"
    ],
-   "keywords": "simulador 2º turno, simulador segundo turno 2026, eleições 2026, apuração 2026, resultado eleição 2026, Flavio Bolsonaro, Lula, planos de governo, propostas de governo, TSE",
-   "screenshot": "https://eleicao.luiz-porto.workers.dev/img/compartilhar.png",
-   "image": "https://eleicao.luiz-porto.workers.dev/img/compartilhar.png",
+   "image": "https://eleicao.luiz-porto.workers.dev/img/compartilhar/simulador.png",
+   "screenshot": "https://eleicao.luiz-porto.workers.dev/img/compartilhar/simulador.png",
    "author": {
     "@id": "https://eleicao.luiz-porto.workers.dev/#autor"
    },
    "publisher": {
     "@id": "https://eleicao.luiz-porto.workers.dev/#autor"
    },
-   "datePublished": "2026-10-04",
+   "datePublished": "2026-10-06",
    "dateModified": "2026-10-06",
-   "about": {
-    "@type": "Event",
-    "name": "Eleições Gerais 2026 · 2º turno",
-    "description": "2º turno das Eleições Gerais 2026: votação para Presidente (Flavio Bolsonaro e Lula) em todo o país e para Governador em 7 estados, das 8h às 17h (horário de Brasília).",
-    "image": "https://eleicao.luiz-porto.workers.dev/img/compartilhar.png",
-    "startDate": "2026-10-25T08:00:00-03:00",
-    "endDate": "2026-10-25T17:00:00-03:00",
-    "eventStatus": "https://schema.org/EventScheduled",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "location": {
-     "@type": "Place",
-     "name": "Brasil",
-     "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "BR"
-     }
-    },
-    "organizer": {
+   "isBasedOn": {
+    "@type": "CreativeWork",
+    "name": "Resultados oficiais das Eleições 2026",
+    "url": "https://resultados.tse.jus.br/",
+    "publisher": {
      "@type": "GovernmentOrganization",
      "name": "Tribunal Superior Eleitoral (TSE)",
      "url": "https://www.tse.jus.br/"
     }
-   },
-   "isBasedOn": [
-    {
-     "@type": "CreativeWork",
-     "name": "Resultados oficiais das Eleições 2026",
-     "url": "https://resultados.tse.jus.br/",
-     "publisher": {
-      "@type": "GovernmentOrganization",
-      "name": "Tribunal Superior Eleitoral (TSE)",
-      "url": "https://www.tse.jus.br/"
-     }
-    },
-    {
-     "@type": "CreativeWork",
-     "name": "Dados abertos do TSE: candidaturas, bens declarados e propostas de governo",
-     "url": "https://dadosabertos.tse.jus.br/",
-     "publisher": {
-      "@type": "GovernmentOrganization",
-      "name": "Tribunal Superior Eleitoral (TSE)",
-      "url": "https://www.tse.jus.br/"
-     }
-    }
-   ]
+   }
   }
  ]
 }
@@ -161,7 +113,7 @@
 <div class="wrap">
   <header>
     <div class="eyebrow"><span class="live" id="live"><i></i><span id="liveTxt">Carregando…</span></span><span id="eyebrowTxt">· Eleições Gerais 2026</span></div>
-    <div class="titulo"><span id="flag"></span><h1 id="title">Placar da Apuração 2026</h1></div>
+    <div class="titulo"><span id="flag"></span><h1 id="title">Simulador do 2º turno</h1></div>
   </header>
 
   <!-- Aviso neutro de incentivo ao voto: some às 17h de 25/10 (fim da votação) ou quando a pessoa fecha. Controlado por js/aviso-voto.js -->
@@ -297,7 +249,17 @@
       <!-- Simulador do 2º turno (montado por js/simulador.js quando a aba abre) -->
       <section class="evolucao simulador" id="simulador" role="tabpanel" aria-labelledby="aba-sim" hidden></section>
       <!-- sim-sobre: texto explicativo do simulador, preenchido por scripts/paginas.py só na página simulador/ -->
-      <section class="bloco sim-sobre" id="simSobre" hidden></section>
+      <section class="bloco sim-sobre" id="simSobre">
+        <h2>Como funciona o simulador do 2º turno</h2>
+        <p>No 1º turno, em 4 de outubro, Flavio Bolsonaro (PL) teve 47,03% dos votos válidos e Lula (PT) teve 45,16%.
+        Os outros 10 candidatos somaram 9,3 milhões de votos, 6 milhões de eleitores votaram branco ou nulo e 33,5 milhões não foram votar.
+        No simulador, você decide em quem cada um desses grupos vota no 2º turno, em 25 de outubro, e vê como ficaria a disputa entre Flavio Bolsonaro e Lula.</p>
+        <h3>Resultado do 1º turno para Presidente</h3>
+        <div class="tabela-wrap"><table class="ev-tabela"><thead><tr><th>Candidato</th><th>Partido</th><th>Votos</th><th>% válidos</th></tr></thead><tbody><tr><td>Flavio Bolsonaro</td><td>PL</td><td>56.104.503</td><td>47,03%</td></tr><tr><td>Lula</td><td>PT</td><td>53.879.538</td><td>45,16%</td></tr><tr><td>Escritor Augusto Cury</td><td>AVANTE</td><td>3.448.569</td><td>2,89%</td></tr><tr><td>Renan Santos</td><td>MISSÃO</td><td>2.675.887</td><td>2,24%</td></tr><tr><td>Ronaldo Caiado</td><td>PSD</td><td>2.605.148</td><td>2,18%</td></tr><tr><td>Zema</td><td>NOVO</td><td>326.488</td><td>0,27%</td></tr><tr><td>Samara</td><td>UP</td><td>122.911</td><td>0,10%</td></tr><tr><td>Hertz Dias</td><td>PSTU</td><td>43.103</td><td>0,04%</td></tr><tr><td>Clariana Barao</td><td>DC</td><td>40.043</td><td>0,03%</td></tr><tr><td>Edmilson Costa</td><td>PCB</td><td>22.693</td><td>0,02%</td></tr><tr><td>Veterinário Wilson Grassi</td><td>DEMOCRATA</td><td>16.881</td><td>0,01%</td></tr><tr><td>Rui Costa Pimenta</td><td>PCO</td><td>15.024</td><td>0,01%</td></tr><tr><td>Brancos</td><td></td><td>2.300.798</td><td></td></tr><tr><td>Nulos</td><td></td><td>3.674.249</td><td></td></tr><tr><td>Não foram votar (abstenção)</td><td></td><td>33.469.244</td><td></td></tr></tbody></table></div>
+        <p class="ev-nota">Fonte: TSE, resultado oficial do 1º turno (Brasil e exterior).</p>
+        <h3>Perguntas frequentes</h3>
+        <div class="sim-faq"><div><h3>O que é o simulador do 2º turno?</h3><p>Uma ferramenta gratuita para montar o seu cenário do 2º turno para Presidente. Para cada grupo de eleitores do 1º turno, você decide quantos por cento votariam em Flavio Bolsonaro, em Lula ou em nenhum dos dois, e vê o resultado na hora.</p></div><div><h3>O simulador é uma pesquisa eleitoral?</h3><p>Não. Ele mostra só o cenário que você montou: não é pesquisa nem previsão. O site não envia, não guarda e não soma as simulações das pessoas.</p></div><div><h3>Por que, sem mexer em nada, os percentuais não são os do 1º turno?</h3><p>No 1º turno, Flavio Bolsonaro teve 47,03% e Lula teve 45,16% dos votos válidos; o resto foi para os outros candidatos. No 2º turno os votos válidos se dividem só entre os dois. Com cada um só com os próprios votos, isso dá 51,01% × 48,99%. O resultado muda conforme você distribui os outros eleitores.</p></div><div><h3>De onde vêm os números?</h3><p>Do resultado oficial do 1º turno de 4 de outubro publicado pelo TSE (resultados.tse.jus.br), com os votos do Brasil e do exterior: 158.745.502 eleitores, 125.275.835 votaram e 119.300.788 votos válidos.</p></div><div><h3>Como compartilhar a minha simulação?</h3><p>Use “Compartilhar imagem” ou “Baixar imagem” para gerar uma imagem pronta para o WhatsApp e o Instagram, ou “Copiar link da simulação” para mandar um link que abre exatamente a mesma simulação.</p></div><div><h3>Quando é o 2º turno?</h3><p>Domingo, 25 de outubro de 2026, das 8h às 17h (horário de Brasília). O país inteiro vota para Presidente, e 7 estados também votam para Governador. Quem faltou no 1º turno pode votar normalmente no 2º.</p></div></div>
+      </section>
 
       <section class="propostas bloco" id="propostas" hidden></section>
       </div>

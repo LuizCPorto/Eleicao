@@ -1,7 +1,7 @@
 // Liga as partes da página: filtros, carregamento, abas, contador e compartilhamento
 import {UFS, REGIOES, CARGOS_T2, SO_PRESIDENTE, TURNOS, REFRESH_MS, REFRESH_LENTO_MS, POR_PAGINA, APP_TSE} from "./config.js";
-import {$, el, ufNome, cargoNome, bandeira, hora, ouvir, avisar} from "./util.js";
-import {state, ui, lerUrl, escreverUrl, turnoPadrao} from "./estado.js";
+import {$, el, ufNome, cargoNome, bandeira, hora, ouvir, avisar, nomeProprio} from "./util.js";
+import {state, ui, lerUrl, escreverUrl, turnoPadrao, vendoSim} from "./estado.js";
 import {disputa, somar, getJson, url, limparCache, esquecer, aoBaixarPresBr, local as localJson} from "./dados.js";
 import {render, renderFinalistas, ocultos, salvarOcultos} from "./lista.js";
 import {carregarFavs} from "./favoritos.js";
@@ -81,9 +81,19 @@ function aplicarControles(){
   destaqueSim();
 }
 
+// Título do simulador: igual ao <title> da página simulador/ (scripts/paginas.py)
+function tituloSim(){
+  const [a, b] = [...T2.presidente.cands].sort((x, y) => x.nome.localeCompare(y.nome, "pt-BR")).map(c => nomeProprio(c.nome));
+  return `Simulador do 2º turno 2026: ${a} × ${b} · Placar da Apuração`;
+}
+
 function updateTitle(){
   const t = state.turno;
-  if (state.cargo === "geral"){
+  if (vendoSim() && temSim()){
+    $("title").textContent = "Simulador do 2º turno";
+    document.title = tituloSim();
+    $("flag").replaceChildren(bandeira("br", "bandeira"));
+  } else if (state.cargo === "geral"){
     $("title").textContent = "2º turno · Presidente e Governador";
     document.title = "Simulador do 2º turno 2026, propostas e apuração ao vivo · Placar da Apuração";   // igual ao <title> (scripts/paginas.py)
     $("flag").replaceChildren(bandeira("br", "bandeira"));
@@ -220,7 +230,7 @@ function destaqueSim(){
   $("irSim").hidden = !ativo || simulando();
 }
 const irParaSim = () => avisar("navegar", {turno:2, cargo:"pres", uf:"br", aba:"sim"});
-$("irSim").onclick = irParaSim;
+$("irSim").onclick = e => { e.preventDefault(); irParaSim(); };   // é um link (simulador/) para o Google seguir
 
 /* ---------- Topo: ao vivo ou contagem regressiva ---------- */
 function tick(){
@@ -257,9 +267,11 @@ function aplicarAbas(d){
   if (d && atual==="evo") atualizarEvolucao(d, state.turno);
   if (d && atual==="mapa") atualizarMapa(d, state.turno, state.turno===2 && T2 ? T2.presidente.porUf : null);
   if (atual==="sim") abrirSimulador(T2);
+  // Texto explicativo e perguntas frequentes (só existem na página simulador/)
+  $("simSobre").hidden = atual!=="sim" || !$("simSobre").firstElementChild;
   destaqueSim();
 }
-function trocarAba(a){ ui.aba = a; aplicarAbas(ui.lastData); escreverUrl(); }
+function trocarAba(a){ ui.aba = a; aplicarAbas(ui.lastData); escreverUrl(); updateTitle(); }
 for (const [k, botao] of ABAS) $(botao).onclick = () => trocarAba(k);
 $("abas").addEventListener("keydown", e => {
   if (e.key!=="ArrowLeft" && e.key!=="ArrowRight") return;

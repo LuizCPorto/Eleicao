@@ -10,8 +10,17 @@ export const turnoPadrao = () => Date.now() > TURNOS[1].fecha + 12*3600e3 ? 2 : 
 
 const ABA_SLUG = {res:null, mapa:"mapa", evo:"evolucao", sim:"simulador"};
 
+// O simulador tem endereço próprio (<site>/simulador/, página gerada por scripts/paginas.py com <base href="../">),
+// para o Google e para a prévia no WhatsApp. RAIZ é a pasta do site nas duas páginas.
+const RAIZ = new URL(".", document.baseURI).pathname;
+const PAGINA_SIM = RAIZ + "simulador/";
+export const naPaginaSim = () => /\/simulador\/?$/.test(location.pathname);
+export const vendoSim = () => ui.aba==="sim" && state.turno===2 && state.cargo==="pres" && state.uf==="br";
+
 export function lerUrl(){
   const p = new URLSearchParams(location.search);
+  ui.sim = p.get("sim") || "";
+  if (naPaginaSim()){ state.turno = 2; state.cargo = "pres"; state.reg = "todas"; state.uf = "br"; ui.aba = "sim"; return; }
   state.turno = p.get("turno")==="1" ? 1 : p.get("turno")==="2" ? 2 : turnoPadrao();
   const slug = (p.get("cargo")||"").toLowerCase();
   const cargo = Object.keys(CARGOS).find(k => CARGOS[k].slug===slug || k===slug);
@@ -24,21 +33,21 @@ export function lerUrl(){
   else state.uf = "br";   // o seletor de estado troca pelo primeiro estado da lista se "br" não valer para o cargo
   const aba = Object.entries(ABA_SLUG).find(([,s]) => s && s===p.get("aba"));
   ui.aba = aba ? aba[0] : "res";
-  ui.sim = p.get("sim") || "";
 }
 
 export function escreverUrl(){
-  const p = new URLSearchParams();
-  p.set("turno", state.turno);
-  if (state.cargo !== "geral"){
-    p.set("cargo", CARGOS[state.cargo].slug);
-    if (state.uf === "reg"){ p.set("uf", "regiao"); p.set("regiao", state.reg); }
-    else if (!(state.cargo==="pres" && state.uf==="br")) p.set("uf", state.uf.toUpperCase());
-    if (ABA_SLUG[ui.aba] && state.cargo==="pres" && state.uf==="br" && (ui.aba!=="sim" || state.turno===2)){
-      p.set("aba", ABA_SLUG[ui.aba]);
-      if (ui.aba==="sim" && ui.sim) p.set("sim", ui.sim);
+  let nova;
+  if (vendoSim()) nova = PAGINA_SIM + (ui.sim ? `?sim=${ui.sim}` : "");
+  else {
+    const p = new URLSearchParams();
+    p.set("turno", state.turno);
+    if (state.cargo !== "geral"){
+      p.set("cargo", CARGOS[state.cargo].slug);
+      if (state.uf === "reg"){ p.set("uf", "regiao"); p.set("regiao", state.reg); }
+      else if (!(state.cargo==="pres" && state.uf==="br")) p.set("uf", state.uf.toUpperCase());
+      if (ABA_SLUG[ui.aba] && ui.aba!=="sim" && state.cargo==="pres" && state.uf==="br") p.set("aba", ABA_SLUG[ui.aba]);
     }
+    nova = `${RAIZ}?${p}`;
   }
-  const nova = `${location.pathname}?${p}`;
   if (nova !== location.pathname + location.search) history.replaceState(null, "", nova);
 }

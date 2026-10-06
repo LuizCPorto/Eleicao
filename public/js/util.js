@@ -13,6 +13,11 @@ export const hora = t => new Date(t).toLocaleTimeString("pt-BR",{hour:"2-digit",
 export const mb = b => (b/1048576).toLocaleString("pt-BR",{maximumFractionDigits:1}) + " MB";
 export const reduzMovimento = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// FLAVIO BOLSONARO -> Flavio Bolsonaro (o TSE publica o nome de urna em maiúsculas; igual ao nome() de scripts/paginas.py)
+const MINUSCULAS = new Set(["de", "da", "do", "das", "dos", "e"]);
+export const nomeProprio = n => String(n||"").toLowerCase().split(/\s+/)
+  .map((p, i) => i && MINUSCULAS.has(p) ? p : p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+
 export function cargoNome(cargo, uf){ return cargo==="est" && uf==="df" ? "Deputado Distrital" : CARGOS[cargo].nome; }
 
 // As fotos ficam na pasta do 1º turno (o candidato é o mesmo nos dois turnos)

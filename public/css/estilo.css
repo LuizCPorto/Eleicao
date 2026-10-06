@@ -390,3 +390,12 @@ li.c.sem-rank .bar{grid-column:2 / 4}
 .sim-chamada-leg li{display:grid;grid-template-columns:14px 1fr auto;gap:8px;align-items:center}
 .sim-chamada-leg i{width:14px;height:12px;border-radius:2px}
 .sim-chamada-leg b{font-weight:600;font-variant-numeric:tabular-nums}
+
+/* Texto da página simulador/ (como funciona, 1º turno, perguntas frequentes) */
+.sim-sobre h2{margin:0;font:700 26px/1.1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.sim-sobre h3{margin:8px 0 0;font:700 18px/1.2 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.sim-sobre p{margin:0;font-size:15px;max-width:75ch}
+.sim-sobre .ev-tabela td:nth-child(2){text-align:left}
+.sim-faq{display:grid;gap:12px}
+.sim-faq h3{color:var(--gold);text-transform:none;font:600 16px/1.3 var(--body);letter-spacing:0}
+.sim-sobre .tabela-wrap{max-height:none}

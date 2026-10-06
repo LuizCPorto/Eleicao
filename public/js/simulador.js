@@ -42,7 +42,7 @@ export function preencherChamada(box, t2, abrir){
       <span class="sim-chamada-eyebrow"><span class="tag">Novo</span> Simulador do 2º turno</span>
       <h2 id="simChamadaTit">Para onde vão os votos?</h2>
       <p></p>
-      <button class="btn btn-destaque btn-grande">Fazer a minha simulação →</button>
+      <a class="btn btn-destaque btn-grande" href="simulador/">Fazer a minha simulação →</a>
       <span class="sim-chamada-nota">Monte o seu cenário e compartilhe com os amigos como imagem ou link.</span>
     </div>
     <div class="sim-chamada-graf">
@@ -65,7 +65,7 @@ export function preencherChamada(box, t2, abrir){
     leg.appendChild(li);
   }
   barra.setAttribute("aria-label", "Eleitorado no 1º turno: " + partes.map(([n, v]) => `${n}, ${milhoes(v)}`).join("; "));
-  box.querySelector("button").onclick = abrir;
+  box.querySelector(".btn-grande").onclick = e => { e.preventDefault(); abrir(); };
 }
 
 /* ---------- Simulação na URL: "55-60-15_ab-10-12" (só os grupos fora do ponto de partida) ---------- */
@@ -338,6 +338,6 @@ async function desenhar(){
   texto(`Base: resultado oficial do 1º turno (TSE). *Branco, nulo ou abstenção.`, M, H - 110, `400 22px ${F.body}`, COR.muted, {max: bw});
   const canon = document.querySelector('link[rel="canonical"]');
   const site = canon ? new URL(canon.href).host : location.host;
-  texto(`Faça a sua: ${site}`, M, H - 56, `600 34px ${F.disp}`, COR.gold, {max: bw});
+  texto(`Faça a sua: ${site}/simulador`, M, H - 56, `600 34px ${F.disp}`, COR.gold, {max: bw});
   return cv;
 }
