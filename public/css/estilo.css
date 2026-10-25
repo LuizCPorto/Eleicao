@@ -177,6 +177,25 @@ li.c.lider .rank{color:var(--gold)}
 .ev-tabela td.lider{font-weight:600}
 .evolucao details summary{cursor:pointer;font-size:13px;color:var(--gold);margin-top:4px}
 .evolucao details summary:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+/* 2º turno comparado com o 1º nas mesmas urnas */
+.mesmas{padding:12px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line);min-width:0}
+.mesmas[hidden]{display:none}
+.mesmas summary{cursor:pointer;font-weight:600;color:var(--gold)}
+.mesmas summary span{font-weight:400;font-size:13px;color:var(--muted)}
+.mesmas summary:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.mesmas-corpo{display:grid;gap:10px;margin-top:12px}
+.mesmas-corpo .tabela-wrap{max-height:none}
+.mesmas-corpo th{white-space:normal}
+.mesmas-corpo td b,.mesmas-corpo td small{display:block}
+.mesmas-corpo td b{font-weight:600}
+.mesmas-corpo td small{font:12px var(--mono);color:var(--muted)}
+.mesmas-corpo td:first-child{white-space:normal}
+/* No celular os dois candidatos precisam caber inteiros, lado a lado */
+@media (max-width:480px){
+  .mesmas{padding:12px}
+  .mesmas-corpo .ev-tabela th,.mesmas-corpo .ev-tabela td{padding:6px 4px}
+  .mesmas-corpo td small{font-size:11px}
+}
 .disputa[hidden],.busca[hidden]{display:none}
 
 /* Busca em todos os cargos e estados */

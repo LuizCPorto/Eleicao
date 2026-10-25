@@ -28,12 +28,14 @@ public/                 TUDO o que vai para o ar (pasta publicada na Cloudflare)
     lista.js            lista de candidatos
     segundo-turno.js    visão geral, duelos, estado decidido, propostas
     simulador.js        simulador do 2º turno de Presidente (transferência de votos, imagem e link)
+    mesmas-urnas.js     2º turno comparado com o 1º nas mesmas urnas (só as seções já apuradas)
     contador.js         contagem regressiva
     mapa.js, evolucao.js, busca.js, favoritos.js, patrimonio.js, util.js
   dados/
     segundo-turno.json  quem disputa o 2º turno e o resultado do 1º, inclusive o nacional completo usado no simulador (gerado por script)
     propostas.json      índice dos PDFs de propostas (gerado por script)
     paginas.json        páginas de compartilhamento existentes (gerado por script)
+    urnas-1t/           votos do 1º turno dos finalistas, seção por seção (gerado por scripts/mesmas_urnas.py)
     resumos.json        resumo opcional das propostas por tema (preenchido à mão)
     indice.json         índice de candidatos para a busca
     bens.json           bens declarados (dados abertos do TSE)
@@ -90,10 +92,19 @@ Limites conferidos: a maior parte do peso são os PDFs das propostas (cerca de 9
 - Na semana da votação, confira de novo no `ele-c.json` se os códigos 6258/6260 continuam os mesmos.
 - Se o TSE corrigir algum resultado do 1º turno: `python scripts/segundo_turno.py` (atualiza `public/dados/segundo-turno.json`).
 - Para atualizar os PDFs das propostas: `python scripts/propostas.py`.
-- Depois de rodar `segundo_turno.py`, rode também `paginas.py` (as prévias usam os nomes dos candidatos).
+- Depois de rodar `segundo_turno.py`, rode também `paginas.py` (as prévias usam os nomes dos candidatos) e `mesmas_urnas.py` (os finalistas podem mudar). Aconteceu no RJ: o TSE retotalizou o 1º turno em 10/10 e o governador foi eleito sem 2º turno.
 - Antes de 25/10 o site não pede os arquivos do 2º turno ao TSE (eles ainda não existem). A partir das 8h do dia 25 passa a pedir; quando a apuração começa, mostra o placar ao vivo com o resultado do 1º turno ao lado.
 
 Os scripts só usam a biblioteca padrão do Python.
+
+## Comparação nas mesmas urnas (2º turno)
+
+Durante a apuração do 2º turno, abaixo da lista, o quadro "Comparar com o 1º turno nas mesmas urnas" mostra o percentual e os votos de cada finalista no 1º turno **somados só nas seções que o TSE já apurou no 2º**, ao lado do placar atual. Assim a comparação não depende de quais regiões foram apuradas primeiro.
+
+- **Quais seções já foram apuradas:** lista de urnas do TSE, `arquivo-urna/<pleito>/config/<uf>/<uf>-p<pleito>-cs.json`. Cada seção ganha data e hora (`da`, `ha`) quando é apurada. Os códigos de pleito (3220 no 1º turno, 3221 no 2º) estão no `ele-c.json` e em `js/config.js` (`PLEITOS`).
+- **Votos do 1º turno por seção:** `public/dados/urnas-1t/`, gerado por `python scripts/mesmas_urnas.py` a partir da votação por seção dos dados abertos do TSE (o zip de Presidente tem cerca de 160 MB e fica numa pasta temporária, fora do projeto). O script confere a soma de todas as seções com o resultado oficial.
+- Só baixa com o quadro aberto. Em Presidente · Brasil são as listas dos 27 estados e do exterior: alguns MB, conferidos a cada 2 minutos.
+- O placar e a lista de urnas são atualizados em momentos diferentes. Quando a diferença passa de 0,1% das seções, o quadro avisa. No fim do 1º turno, 41 seções do exterior ficaram fora da lista, o que dá 0,008% do Brasil.
 
 ## Plano B (TSE fora do ar)
 

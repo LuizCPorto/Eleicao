@@ -11,6 +11,10 @@ export const ELEICOES = {
   2: {pres:"6258", est:"6260"}
 };
 
+// Códigos de pleito (campo "cd" de "pl" no mesmo ele-c.json): um por turno, valem para os arquivos de urna
+// (arquivo-urna/<pleito>/config/<uf>/…-cs.json, a lista de seções com a hora em que cada uma foi apurada)
+export const PLEITOS = {1:"3220", 2:"3221"};
+
 // Datas em UTC. Votação das 8h às 17h, horário de Brasília (UTC−3) em todo o país.
 export const TURNOS = {
   1: {data:"4 de outubro",  curta:"4/out",  abre:Date.UTC(2026, 9, 4, 11),  fecha:Date.UTC(2026, 9, 4, 20)},

@@ -12,6 +12,7 @@ import {segundoTurno, finalistas, pctT1, ufsGov2T, renderGeral, renderDecidido, 
 import {fase, textoCurto, preencherContagem} from "./contador.js";
 import {iniciarAvisoVoto} from "./aviso-voto.js";
 import {abrirSimulador, preencherChamada} from "./simulador.js";
+import {atualizarMesmas, esconderMesmas} from "./mesmas-urnas.js";
 
 let T2 = null;              // resumo do 1º turno usado no 2º turno (dados/segundo-turno.json)
 let timer = null, nextAt = 0, loadSeq = 0;
@@ -184,6 +185,7 @@ async function carregarDisputa(seq){
 
   if (t === 2 && (!d || !d.st)){
     // Apuração do 2º turno ainda não começou: finalistas em ordem alfabética com o resultado do 1º turno
+    esconderMesmas();
     $("progresso").hidden = true;
     setConexao(true); aoVivo = false; aviso(null);
     renderFinalistas(cands2, t1 || {});
@@ -194,6 +196,7 @@ async function carregarDisputa(seq){
   setConexao(!d.cache);
   avisoCache(d.cache, d);
   render(d, t === 2 ? t1 : null);
+  if (t === 2) atualizarMesmas(state.cargo, state.uf, state.reg, d, cands2); else esconderMesmas();
   aplicarAbas(d);
   const encerrada = d.fim || d.pst >= 100;
   aoVivo = !encerrada;
@@ -286,6 +289,7 @@ $("abas").addEventListener("keydown", e => {
 function mudouFiltro(){
   ui.openId = null; state.limite = POR_PAGINA; ui.lastData = null; geralFeito = false;
   $("list").innerHTML = ""; $("listFoot").innerHTML = ""; $("verdict").textContent = ""; $("meta").textContent = "Carregando…";
+  esconderMesmas();
   buildUfSelect(); aplicarControles(); updateTitle(); escreverUrl(); mostrarVista();
   load();
 }
