@@ -196,7 +196,7 @@ async function carregarDisputa(seq){
   setConexao(!d.cache);
   avisoCache(d.cache, d);
   render(d, t === 2 ? t1 : null);
-  if (t === 2) atualizarMesmas(state.cargo, state.uf, state.reg, d, cands2); else esconderMesmas();
+  if (t === 2) atualizarMesmas(state.cargo, state.uf, state.reg, cands2); else esconderMesmas();
   aplicarAbas(d);
   const encerrada = d.fim || d.pst >= 100;
   aoVivo = !encerrada;

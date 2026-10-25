@@ -1,7 +1,7 @@
 """Gera public/dados/urnas-1t/: os votos do 1º turno, seção por seção, dos dois finalistas de cada disputa do 2º turno.
 
-O site usa esses arquivos para comparar o 2º turno com o 1º "nas mesmas urnas": soma o 1º turno só das seções
-que o TSE já apurou no 2º turno (lista de urnas do TSE em arquivo-urna/<pleito>/config/<uf>/<uf>-p<pleito>-cs.json).
+O site usa esses arquivos para comparar o 2º turno com o 1º "nas mesmas urnas": soma o 1º turno das seções dos
+municípios que o TSE já apurou 100% no 2º turno (public/js/mesmas-urnas.js).
 
 Fonte: dados abertos do TSE, votação por seção (cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/):
 votacao_secao_2026_BR.zip para Presidente e votacao_secao_2026_<UF>.zip para Governador. Os zips são grandes

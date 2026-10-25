@@ -28,7 +28,7 @@ public/                 TUDO o que vai para o ar (pasta publicada na Cloudflare)
     lista.js            lista de candidatos
     segundo-turno.js    visão geral, duelos, estado decidido, propostas
     simulador.js        simulador do 2º turno de Presidente (transferência de votos, imagem e link)
-    mesmas-urnas.js     2º turno comparado com o 1º nas mesmas urnas (só as seções já apuradas)
+    mesmas-urnas.js     2º turno comparado com o 1º nas mesmas urnas (municípios já 100% apurados)
     contador.js         contagem regressiva
     mapa.js, evolucao.js, busca.js, favoritos.js, patrimonio.js, util.js
   dados/
@@ -99,12 +99,14 @@ Os scripts só usam a biblioteca padrão do Python.
 
 ## Comparação nas mesmas urnas (2º turno)
 
-Durante a apuração do 2º turno, abaixo da lista, o quadro "Comparar com o 1º turno nas mesmas urnas" mostra o percentual e os votos de cada finalista no 1º turno **somados só nas seções que o TSE já apurou no 2º**, ao lado do placar atual. Assim a comparação não depende de quais regiões foram apuradas primeiro.
+Durante a apuração do 2º turno, abaixo da lista, o quadro "Comparar com o 1º turno nas mesmas urnas" mostra o percentual e os votos de cada finalista nos dois turnos **só nos municípios que o TSE já apurou 100% no 2º turno**, e a diferença. Num município fechado as urnas são exatamente as mesmas nos dois turnos, então a comparação não depende de quais regiões foram apuradas primeiro.
 
-- **Quais seções já foram apuradas:** lista de urnas do TSE, `arquivo-urna/<pleito>/config/<uf>/<uf>-p<pleito>-cs.json`. Cada seção ganha data e hora (`da`, `ha`) quando é apurada. Os códigos de pleito (3220 no 1º turno, 3221 no 2º) estão no `ele-c.json` e em `js/config.js` (`PLEITOS`).
-- **Votos do 1º turno por seção:** `public/dados/urnas-1t/`, gerado por `python scripts/mesmas_urnas.py` a partir da votação por seção dos dados abertos do TSE (o zip de Presidente tem cerca de 160 MB e fica numa pasta temporária, fora do projeto). O script confere a soma de todas as seções com o resultado oficial.
-- Só baixa com o quadro aberto. Em Presidente · Brasil são as listas dos 27 estados e do exterior: alguns MB, conferidos a cada 2 minutos.
-- O placar e a lista de urnas são atualizados em momentos diferentes. Quando a diferença passa de 0,1% das seções, o quadro avisa. No fim do 1º turno, 41 seções do exterior ficaram fora da lista, o que dá 0,008% do Brasil.
+- **Quais municípios já fecharam:** `<eleição>/dados/<uf>/<uf>-e<eleição>-ab.json`, um arquivo por estado com as seções apuradas de cada município, atualizado junto com o placar.
+- **2º turno:** resultado oficial de cada município fechado (`<uf><município>-c<cargo>-e<eleição>-u.json`, cerca de 1 KB; não muda mais, então fica guardado na memória). Estado 100% apurado usa o arquivo do estado.
+- **1º turno:** soma das seções do município em `public/dados/urnas-1t/`, gerado por `python scripts/mesmas_urnas.py` a partir da votação por seção dos dados abertos do TSE (o zip de Presidente tem cerca de 160 MB e fica numa pasta temporária, fora do projeto). O script confere a soma de todas as seções com o resultado oficial. Município que não aparece nesses dados teve zero voto no 1º turno (há cidades no exterior com uma seção e ninguém votando).
+- **Por que não seção por seção:** a lista de urnas do TSE (`arquivo-urna/<pleito>/config/...-cs.json`, com a hora de cada seção) sai em lotes e, na noite do 2º turno, ficou cerca de 2 horas atrás do placar. Comparar essa lista com o placar misturava conjuntos diferentes de urnas.
+- Municípios ainda em apuração ficam de fora até fechar, então os votos do quadro são menos que os do placar.
+- Só baixa com o quadro aberto. Em Presidente · Brasil é um arquivo pequeno por estado a cada minuto, mais um por município que fechar.
 
 ## Plano B (TSE fora do ar)
 
