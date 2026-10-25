@@ -75,7 +75,7 @@
     "Compartilhamento da simulação como imagem (WhatsApp, Instagram) ou como link",
     "Comparativo dos planos de governo: propostas oficiais registradas no TSE pelos finalistas a Presidente e Governador",
     "Resumo lado a lado dos dois planos de governo para Presidente, nos mesmos 10 temas",
-    "Visão geral do 2º turno: Presidente e Governador em 7 estados, com o resultado do 1º turno e os governadores eleitos no 1º turno",
+    "Visão geral do 2º turno: Presidente e Governador em 6 estados, com o resultado do 1º turno e os governadores eleitos no 1º turno",
     "Apuração ao vivo com dados oficiais do TSE, atualizada a cada 30 segundos",
     "Resultados do 1º turno para Presidente, Governador, Senador, Deputado Federal e Deputado Estadual ou Distrital em todos os estados",
     "Mapa do Brasil com quem está na frente em cada estado",
@@ -97,11 +97,11 @@
     "@id": "https://eleicao.luiz-porto.workers.dev/#autor"
    },
    "datePublished": "2026-10-04",
-   "dateModified": "2026-10-06",
+   "dateModified": "2026-10-25",
    "about": {
     "@type": "Event",
     "name": "Eleições Gerais 2026 · 2º turno",
-    "description": "2º turno das Eleições Gerais 2026: votação para Presidente (Flavio Bolsonaro e Lula) em todo o país e para Governador em 7 estados, das 8h às 17h (horário de Brasília).",
+    "description": "2º turno das Eleições Gerais 2026: votação para Presidente (Flavio Bolsonaro e Lula) em todo o país e para Governador em 6 estados, das 8h às 17h (horário de Brasília).",
     "image": "https://eleicao.luiz-porto.workers.dev/img/compartilhar.png",
     "startDate": "2026-10-25T08:00:00-03:00",
     "endDate": "2026-10-25T17:00:00-03:00",
@@ -251,6 +251,11 @@
       <div class="verdict" id="verdict"></div>
       <ol id="list"></ol>
       <div class="list-foot" id="listFoot"></div>
+      <!-- 2º turno: o 1º turno somado só nas seções já apuradas (js/mesmas-urnas.js) -->
+      <details class="mesmas" id="mesmas" hidden>
+        <summary>Comparar com o 1º turno nas mesmas urnas<span id="mesmasPeso"></span></summary>
+        <div class="mesmas-corpo" id="mesmasCorpo"></div>
+      </details>
       </div>
 
       <section class="evolucao mapa" id="mapa" role="tabpanel" aria-labelledby="aba-mapa" hidden>
