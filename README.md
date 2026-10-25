@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Eleicao
-=======
 # Placar da Apuração 2026
 
 Site estático que acompanha as Eleições Gerais 2026 com os dados oficiais do TSE: resultados do 1º turno (todos os cargos), visão geral do 2º turno (Presidente e Governador), propostas de governo dos finalistas e apuração ao vivo.
@@ -115,4 +112,3 @@ Nenhum anúncio pode ser de candidato, partido ou coligação: propaganda eleito
 ## Imagens de compartilhamento
 
 `public/img/compartilhar.png` e `public/img/compartilhar/<uf>.png` (1200×630) são prints de `scripts/imagem-compartilhar.html`, gerados pelo `paginas.py --imagens` com o Edge ou o Chrome. São neutros: sem foto, nomes em ordem alfabética.
->>>>>>> 3848752 (Segundo turno)
